@@ -7,16 +7,22 @@
 <title>Change new password</title>
 </head>
 <body>
-	<div>
-		<form method="post" action="ChangePassword">
-			<div>
-				New password:<input type="text" name="newpassword">
-			</div>
-			<div>
-				<button type="submit" name="button" value="change">Change</button>
-			</div>
-		</form>
+	<div class="col-md-12">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<form method="post" action="ChangePassword">
+				<div>
+					New password:<input type="text" name="newpassword" required class="form-control" style="width:50%">
+				</div>
+				<div style="margin-top:1%">
+					<button type="submit" name="button" value="change" class="btn btn-info">Change</button>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-4"></div>
 	</div>
-
 </body>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="javascript/bootstrap.min.js"></script>
+<script src="javascript/jquery.min.js"></script>
 </html>

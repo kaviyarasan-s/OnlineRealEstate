@@ -9,27 +9,35 @@ import com.chainsys.realestate.service.Profile;
 import com.chainsys.realestate.validate.ProfileValidation;
 
 public class ProfileImpl implements Profile {
-
+	/*
+	 * Register user details
+	 * 
+	 * @see
+	 * com.chainsys.realestate.service.Profile#userRegistration(com.chainsys
+	 * .realestate.model.Users)
+	 */
 	@Override
 	public boolean userRegistration(Users user) {
 		boolean registerResult = false;
-
-		if (validateUserInfo()) {
-			UserDAO userDAO = new UserDAOImpl();
-
-			registerResult = userDAO.addUserDetails(user);
-		} else {
-			registerResult = false;
-		}
+		UserDAO userDAO = new UserDAOImpl();
+		registerResult = userDAO.addUserDetails(user);
 		return registerResult;
 	}
-
+	/*
+	 * Validate user information
+	 * @see
+	 * com.chainsys.realestate.service.Profile#validateUserInfo(com.chainsys
+	 * .realestate.model.Users)
+	 */
 	@Override
-	public boolean validateUserInfo() {
-
-		return ProfileValidation.userValidation();
+	public boolean validateUserInfo(Users user) {
+		return ProfileValidation.userValidation(user);
 	}
-
+	/*
+	 * Change password
+	 * @see com.chainsys.realestate.service.Profile#changePassword(com.chainsys.
+	 * realestate.model.Users)
+	 */
 	@Override
 	public boolean changePassword(Users user) {
 		boolean success = false;
@@ -38,32 +46,37 @@ public class ProfileImpl implements Profile {
 		if (updatedUserDetails != null) {
 			updatedUserDetails.setPassword(user.getPassword());
 		}
-		
-		if (validateUserInfo()) {
-			success = userDAO.changePassword(updatedUserDetails);
-		}
+		success = userDAO.changePassword(updatedUserDetails);
 		return success;
 	}
-
+	/*
+	 * Check forgot password is present or not
+	 * @see
+	 * com.chainsys.realestate.service.Profile#checkForgotPasswordEmail(com.
+	 * chainsys.realestate.model.Users)
+	 */
 	@Override
 	public boolean checkForgotPasswordEmail(Users user) {
 		boolean valid = false;
 		UserDAO userDAO = new UserDAOImpl();
 		Users updatedUserDetails = userDAO.getUserDetailsByEmail(user);
-		if (validateUserInfo()) {
-			if (updatedUserDetails == null) {
-				valid = false;
-			} else {
-				valid = true;
-			}
+		if (updatedUserDetails == null) {
+			valid = false;
+		} else {
+			valid = true;
 		}
 		return valid;
 	}
-
+	/*
+	 * Edit profile informations
+	 * @see
+	 * com.chainsys.realestate.service.Profile#editProfile(com.chainsys.realestate
+	 * .model.Users)
+	 */
 	@Override
 	public boolean editProfile(Users user) {
 		boolean success = false;
-		UserDAO userDAO = new UserDAOImpl();		
+		UserDAO userDAO = new UserDAOImpl();
 		Users updatedUserDetails = userDAO.getUserDetailsById(user);
 		if (user.getName() != null && !user.getName().isEmpty()) {
 			updatedUserDetails.setName(user.getName());
@@ -74,17 +87,16 @@ public class ProfileImpl implements Profile {
 		if (user.getPassword() != null && !user.getPassword().isEmpty()) {
 			updatedUserDetails.setPassword(user.getPassword());
 		}
-		if (user.getMobilenumber()>0&&String.valueOf(user.getMobilenumber()).length()==10) {
+		if (String.valueOf(user.getMobilenumber()).length() == 10) {
 			updatedUserDetails.setMobilenumber(user.getMobilenumber());
 		}
 		updatedUserDetails.setCreatedDate(user.getCreatedDate());
 		updatedUserDetails.setModifiedBy(user.getId());
 		updatedUserDetails.setModifiedDate(LocalDateTime.now());
-		if (validateUserInfo()) {
-			success= userDAO.editProfileInfo(updatedUserDetails);
+		if (validateUserInfo(user)) {
+			success = userDAO.editProfileInfo(updatedUserDetails);
 		}
-		
-		
+
 		return success;
 	}
 }

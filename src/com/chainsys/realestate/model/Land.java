@@ -72,7 +72,17 @@ public class Land {
 	
 	@Column(name = "modified_date")
 	private LocalDateTime modifiedDate;
+	
+	public String getStatus() {
+		return status;
+	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@Column(name = "status")
+	private String status;
 	public int getId() {
 		return id;
 	}

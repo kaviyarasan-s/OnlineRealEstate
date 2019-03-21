@@ -7,15 +7,35 @@
 <title>ForgetPassword</title>
 </head>
 <body>
-	<div>
-		<form method="post" action="ChangePassword">
+	<div class="col-md-12">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<form method="post" action="ChangePassword">
+				<div>
+					Email:<input type="text" name="email" required class="form-control"
+						style="width: 50%">
+				</div>
+				<div style="margin-top: 1%">
+					<button type="submit" name="button" class="btn btn-info"
+						value="reset">Reset</button>
+				</div>
+			</form>
 			<div>
-				Email:<input type="text" name="email">
+				<a href="login.jsp">Back</a>
 			</div>
-			<div>
-				<button type="submit" name="button" value="reset">Reset</button>
-			</div>
-		</form>
+		</div>
+
+		<div class="col-md-4"></div>
+		<div>
+			<%
+				if (request.getAttribute("MESSAGE") != null) {
+					out.print(request.getAttribute("MESSAGE"));
+				}
+			%>
+		</div>
 	</div>
 </body>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="javascript/bootstrap.min.js"></script>
+<script src="javascript/jquery.min.js"></script>
 </html>

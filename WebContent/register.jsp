@@ -8,34 +8,43 @@
 <title>Registration</title>
 </head>
 <body>
-	<div>
-		<form method="post" action="ServletEditProfile">
+	<div class="col-md-12">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<form method="post" action="ServletRegister">
+				<div>
+					Name:<input type="text" name="name" required class="form-control" style="width:50%">
+				</div>
+				<div style="margin-top: 1%">
+					Email:<input type="text" name="email" required class="form-control" style="width:50%">
+				</div>
+				<div style="margin-top: 1%">
+					Phone number:<input type="number" name="phonenumber" required
+						class="form-control" style="width:50%">
+				</div>
+				<div style="margin-top: 1%">
+					Password:<input type="password" name="password" required
+						class="form-control" style="width:50%">
+				</div>
+				<div style="margin-top: 1%">
+					<button type="submit" class="btn btn-info">Register</button>
+				</div>
+			</form>
 			<div>
-				Name:<input type="text" name="name">
+				<%
+					if (request.getAttribute("MESSAGE") != null) {
+						out.print(request.getAttribute("MESSAGE"));
+					}
+				%>
 			</div>
 			<div>
-				Email:<input type="text" name="email">
+				<a href="login.jsp">Back</a>
 			</div>
-			<div>
-				Phone number:<input type="number" name="phonenumber">
-			</div>
-			<div>
-				Password:<input type="password" name="password">
-			</div>
-			<div>
-				<button type="submit">Register</button>
-			</div>
-		</form>
-		<div>
-			<%
-				if (request.getAttribute("message") != null) {
-					out.print(request.getAttribute("message"));
-				}
-			%>
-		</div>
-		<div>
-			<a href="login.jsp">Back</a>
+			<div class="col-md-4"></div>
 		</div>
 	</div>
 </body>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="javascript/bootstrap.min.js"></script>
+<script src="javascript/jquery.min.js"></script>
 </html>

@@ -10,43 +10,64 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.chainsys.realestate.model.City;
 import com.chainsys.realestate.model.Land;
+import com.chainsys.realestate.model.Location;
+import com.chainsys.realestate.model.Property;
 import com.chainsys.realestate.service.Filter;
 import com.chainsys.realestate.service.impl.FilterImpl;
 
-/**
- * Servlet implementation class ServletFilterLand
- */
 @WebServlet("/ServletFilterLand")
 public class ServletFilterLand extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ServletFilterLand() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	public ServletFilterLand() {
+		super();
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Land land=new Land();
-		land.setBhk(2);
-		land.setPrice(BigDecimal.ZERO);
-//		land.setTransactionType("New house");
-		Filter filter=new FilterImpl();
-		List<Land> landDetails=filter.filterLandsDetails(land);
-		System.out.println(landDetails);
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 	}
 
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		Land land = new Land();
+		String propertyType = request.getParameter("propertytype");
+		if (!propertyType.isEmpty() && propertyType != null) {
+			Property property = new Property();
+			property.setName(propertyType);
+			land.setProperty(property);
+		}
+		String city=request.getParameter("city");
+		if (!city.isEmpty() && city != null) {
+			City cityDetails = new City();
+			cityDetails.setName(propertyType);
+			Location location=new Location();
+			location.setCity(cityDetails);
+			land.setLocation(location);
+		}
+		String purchaseType=request.getParameter("purchasetype");
+		if (!purchaseType.isEmpty() && purchaseType != null) {
+			land.setPurchaseType(purchaseType);
+		}
+		int bhk = Integer.parseInt(request.getParameter("bhk"));
+		String price = request.getParameter("price");
+		double priceAmount = 0;
+		String transactionType = request.getParameter("transactiontype");
+		if (!price.isEmpty() && price != null)
+			land.setPrice(BigDecimal.valueOf(priceAmount));
+		if (bhk > 0)
+			land.setBhk(bhk);
+		if (!transactionType.isEmpty() && transactionType != null)
+			land.setTransactionType(transactionType);
+		Filter filter = new FilterImpl();
+//		System.out.println("propertyType"+propertyType);
+//		System.out.println("purchaseType"+purchaseType);
+//		System.out.println("city"+city);
+//		System.out.println("bhk"+bhk);
+//		System.out.println("price"+price);
+//		System.out.println("transactionType"+transactionType);
+		List<Land> landDetails = filter.filterLandsDetails(land);
+//		System.out.println(landDetails);
+	}
 }

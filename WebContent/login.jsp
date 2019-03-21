@@ -8,42 +8,40 @@
 <title>Login</title>
 </head>
 <body>
-	<div>
-		<form method="post" action="ServletLogin">
+	<div class="col-md-12">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<form method="post" action="ServletLogin">
+				<div>
+					Email:<input type="text" name="email" class="form-control" required
+						style="width: 50%">
+				</div>
+				<div>
+					Password:<input type="password" name="password"
+						class="form-control" required style="width: 50%">
+				</div>
+				<div style="margin-top: 1%">
+					<button type="submit" class="btn btn-info">Login</button>
+				</div>
+			</form>
 			<div>
-				User Name:<input type="text" name="username">
+				<div><a href="register.jsp">Sign up</a></div>
+				<div><a
+					href="forgotpassword.jsp">Forgot password</a></div>
 			</div>
 			<div>
-				Password:<input type="password" name="password">
+				<%
+					if (request.getAttribute("MESSAGE") != null) {
+						out.print(request.getAttribute("MESSAGE"));
+					}
+				%>
 			</div>
-			<div>
-				<button type="submit">Login</button>
-			</div>
-			<div>
-				<a href="register.jsp">Signup</a> <a href="forgotpassword.jsp">Forget
-					password</a>
-			</div>
+		</div>
+		<div class="col-md-4"></div>
 
-		</form>
-	</div>
-	<div>
-		<%
-			if (request.getAttribute("message") != null) {
-				out.print(request.getAttribute("message"));
-			}
-		%>
-	</div>
-	<div>
-		<form method="get" action="ServletRegister">
-			<button type="submit">View</button>
-
-		</form>
-	</div>
-	<div>
-		<form method="post" action="ServletFilterLand">
-			<button type="submit">Filter</button>
-
-		</form>
 	</div>
 </body>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="javascript/bootstrap.min.js"></script>
+<script src="javascript/jquery.min.js"></script>
 </html>

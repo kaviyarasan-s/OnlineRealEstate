@@ -4,7 +4,7 @@ import com.chainsys.realestate.model.Users;
 
 public interface Profile {
 	
-	boolean validateUserInfo();
+	boolean validateUserInfo(Users user);
 
 	boolean userRegistration(Users user);
 	
