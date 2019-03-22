@@ -33,7 +33,6 @@
 				<form class="login100-form validate-form" method="post"
 					action="ServletRegister">
 					<span class="login100-form-title p-b-49"> Register </span>
-
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Username is required">
 						<span class="label-input100">Name</span> <input class="input100"
@@ -47,7 +46,7 @@
 						<span class="focus-input100" data-symbol="&#9993;"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input"
+					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Password is required">
 						<span class="label-input100">Password</span> <input
 							class="input100" type="password" name="password"
@@ -68,7 +67,7 @@
 						</div>
 					</div>
 
-					<div class="container-login100-form-btn">
+					<div class="container-login100-form-btn ">
 						<div>
 							<div class="login100-form-bgbtn"></div>
 							<a href="login.jsp">Back</a>
@@ -88,41 +87,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- <div class="col-md-12">
-		<div class="col-md-4"></div>
-		<div class="col-md-4">
-			<form method="post" action="ServletRegister">
-				<div>
-					Name:<input type="text" name="name" required class="form-control"
-						style="width: 50%">
-				</div>
-				<div style="margin-top: 1%">
-					Email:<input type="text" name="email" required class="form-control"
-						style="width: 50%">
-				</div>
-				<div style="margin-top: 1%">
-					Phone number:<input type="number" name="phonenumber" required
-						class="form-control" style="width: 50%">
-				</div>
-				<div style="margin-top: 1%">
-					Password:<input type="password" name="password" required
-						class="form-control" style="width: 50%">
-				</div>
-				<div style="margin-top: 1%">
-					<button type="submit" class="btn btn-info">Register</button>
-				</div>
-			</form>
-			<div>
-				<%if (request.getAttribute("MESSAGE") != null) {
-				out.print(request.getAttribute("MESSAGE"));
-			}%>
-			</div>
-			<div>
-				<a href="login.jsp">Back</a>
-			</div>
-			<div class="col-md-4"></div>
-		</div>
-	</div> -->
 </body>
 <div id="dropDownSelect1"></div>
 <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
