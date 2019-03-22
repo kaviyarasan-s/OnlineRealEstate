@@ -6,32 +6,58 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>ForgetPassword</title>
 </head>
-<body>
-	<div class="col-md-12">
-		<div class="col-md-4"></div>
-		<div class="col-md-4">
-			<form method="post" action="ChangePassword">
-				<div>
-					Email:<input type="text" name="email" required class="form-control"
-						style="width: 50%">
-				</div>
-				<div style="margin-top: 1%">
-					<button type="submit" name="button" class="btn btn-info"
-						value="reset">Reset</button>
-				</div>
-			</form>
-			<div>
-				<a href="login.jsp">Back</a>
-			</div>
-		</div>
+<body style="background-image: url('images/bg-01.jpg');">
 
-		<div class="col-md-4"></div>
-		<div>
-			<%
-				if (request.getAttribute("MESSAGE") != null) {
-					out.print(request.getAttribute("MESSAGE"));
-				}
-			%>
+	<div class="container" >
+		<div class="row">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="text-center">
+								<h3>
+									<i class="fa fa-lock fa-4x"></i>
+								</h3>
+								<h2 class="text-center">Forgot Password?</h2>
+								<p>You can reset your password here.</p>
+								<div class="panel-body">
+
+									<form class="form" method="post" action="ChangePassword">
+										<fieldset>
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i
+														class="glyphicon glyphicon-envelope color-blue"></i></span> <input
+														id="emailInput" placeholder="email address"
+														class="form-control" type="email" name="email"
+														oninvalid="setCustomValidity('Please enter a valid email address!')"
+														onchange="try{setCustomValidity('')}catch(e){}"
+														required="">
+												</div>
+											</div>
+											<div class="form-group">
+												<input class="btn btn-lg btn-primary btn-block"
+													value="reset" name="button" type="submit">
+											</div>
+											<div>
+												<a href="login.jsp">Back</a>
+											</div>
+											<div>
+												<%
+													if (request.getAttribute("MESSAGE") != null) {
+														out.print(request.getAttribute("MESSAGE"));
+													}
+												%>
+											</div>
+										</fieldset>
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>

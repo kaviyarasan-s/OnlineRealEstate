@@ -7,10 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-
 import com.chainsys.realestate.dao.FilterDAO;
 import com.chainsys.realestate.model.City;
 import com.chainsys.realestate.model.Land;
@@ -18,78 +14,313 @@ import com.chainsys.realestate.model.Location;
 import com.chainsys.realestate.model.Property;
 import com.chainsys.realestate.model.Users;
 import com.chainsys.realestate.util.ConnectionUtil;
-import com.chainsys.realestate.util.HibernateConnectionUtil;
 
 public class FilterDAOImpl implements FilterDAO {
-	static SessionFactory sessionFactory;
-	static Session session;
-
-	public FilterDAOImpl() {
-		// Create session factory object
-		sessionFactory = HibernateConnectionUtil.getSessionFactory();
-		// getting session object from session factory
-		session = sessionFactory.openSession();
-		// getting transaction object from session object
-		session.beginTransaction();
-	}
-
 	@Override
-	@SuppressWarnings("unchecked")
 	public List<Land> filerLandByBhkPriceTrnType(Land land) {
+		Connection connection = ConnectionUtil.getConnection();
+		List<Land> landDetailsList = new ArrayList<Land>();
+		String query = "select "
+				+ "u.name,u.phonenumber,u.email, "
+				+ "p.name as propertyname, "
+				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description, "
+				+ "c.name as cityname ,l.name as locationname  from RL_EST_LAND lu "
+				+ "join RL_EST_PROPERTYTYPE p on lu.property_id=p.property_id "
+				+ "join RL_EST_LOCATION l on lu.location_id=l.location_id "
+				+ "join RL_EST_CITY c on c.city_id = l.city_id "
+				+ "join RL_EST_LAND_USER u on u.user_id=lu.user_id "
+				+ "where lu.bhk=? and lu.transaction_type=? and lu.price=? and "
+				+ "lu.purchasetype=? and lu.property_id=? and lu.location_id in (select location_id from RL_EST_LOCATION where city_id=?)";
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, land.getBhk());
+			preparedStatement.setString(2, land.getTransactionType());
+			preparedStatement.setBigDecimal(3, land.getPrice());
+			preparedStatement.setString(4, land.getPurchaseType());
+			preparedStatement.setInt(5, land.getProperty().getId());
+			preparedStatement.setInt(6, land.getLocation().getCity().getId());
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Land addLandDetails = new Land();
+				Users user = new Users();
+				user.setName(resultSet.getString("name"));
+				user.setEmail(resultSet.getString("email"));
+				user.setMobilenumber(resultSet.getLong("phonenumber"));
+				addLandDetails.setUser(user);
+				Property property = new Property();
+				property.setName(resultSet.getString("propertyname"));
+				addLandDetails.setProperty(property);
+				Location location = new Location();
+				City city = new City();
+				city.setName(resultSet.getString("cityname"));
+				location.setCity(city);
+				location.setName(resultSet.getString("locationname"));
+				addLandDetails.setLocation(location);
+				addLandDetails.setBhk(resultSet.getInt("bhk"));
+				addLandDetails.setBuildingName(resultSet
+						.getString("building_name"));
+				addLandDetails.setSize(resultSet.getInt("land_size"));
+				addLandDetails.setTransactionType(resultSet
+						.getString("transaction_type"));
+				addLandDetails.setPurchaseType(resultSet
+						.getString("purchasetype"));
+				addLandDetails.setDescription(resultSet
+						.getString("description"));
+				addLandDetails.setDiscount(resultSet.getInt("discount"));
+				landDetailsList.add(addLandDetails);
+			}
+		} catch (SQLException e) {
 
-		Query<Land> query = session
-				.createQuery("from Land where bhk=:bhk and price=:price and transactionType=:trntype and "
-						+ "propertyType.name=:prpertype and location.id=:location and purchaseType=:purchasetype");
-		query.setParameter("bhk", land.getBhk());
-		query.setParameter("price", land.getPrice());
-		query.setParameter("trntype", land.getTransactionType());
-		query.setParameter("prpertype", land.getProperty().getName());
-		query.setParameter("location", land.getLocation().getId());
-		query.setParameter("purchasetype", land.getPurchaseType());
-		List<Land> landDetails = query.list();
-		return landDetails;
-
+			e.printStackTrace();
+		}
+		return landDetailsList;
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public List<Land> filerLandByBhkPrice(Land land) {
+		Connection connection = ConnectionUtil.getConnection();
+		List<Land> landDetailsList = new ArrayList<Land>();
+		String query = "select "
+				+ "u.name,u.phonenumber,u.email, "
+				+ "p.name as propertyname, "
+				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description, "
+				+ "c.name as cityname ,l.name as locationname  from RL_EST_LAND lu "
+				+ "join RL_EST_PROPERTYTYPE p on lu.property_id=p.property_id "
+				+ "join RL_EST_LOCATION l on lu.location_id=l.location_id "
+				+ "join RL_EST_CITY c on c.city_id = l.city_id "
+				+ "join RL_EST_LAND_USER u on u.user_id=lu.user_id "
+				+ "where lu.bhk=?  and lu.price=? ";
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, land.getBhk());
+			preparedStatement.setBigDecimal(2, land.getPrice());
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet != null) {
+				while (resultSet.next()) {
+					Land addLandDetails = new Land();
+					Users user = new Users();
+					user.setName(resultSet.getString("name"));
+					user.setEmail(resultSet.getString("email"));
+					user.setMobilenumber(resultSet.getLong("phonenumber"));
+					addLandDetails.setUser(user);
+					Property property = new Property();
+					property.setName(resultSet.getString("propertyname"));
+					addLandDetails.setProperty(property);
+					Location location = new Location();
+					City city = new City();
+					city.setName(resultSet.getString("cityname"));
+					location.setCity(city);
+					location.setName(resultSet.getString("locationname"));
+					addLandDetails.setLocation(location);
+					addLandDetails.setBhk(resultSet.getInt("bhk"));
+					addLandDetails.setBuildingName(resultSet
+							.getString("building_name"));
+					addLandDetails.setSize(resultSet.getInt("land_size"));
+					addLandDetails.setTransactionType(resultSet
+							.getString("transaction_type"));
+					addLandDetails.setPurchaseType(resultSet
+							.getString("purchasetype"));
+					addLandDetails.setDescription(resultSet
+							.getString("description"));
+					addLandDetails.setDiscount(resultSet.getInt("discount"));
+					landDetailsList.add(addLandDetails);
+				}
+			}
 
-		Query<Land> query = session
-				.createQuery("from Land where bhk=:bhk and price=:price");
-		query.setParameter("bhk", land.getBhk());
-		query.setParameter("price", land.getPrice());
+		} catch (SQLException e) {
 
-		List<Land> landDetails = query.list();
-		return landDetails;
+			e.printStackTrace();
+		}
+
+		return landDetailsList;
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public List<Land> filerLandByBhkTrnType(Land land) {
-		Query<Land> query = session
-				.createQuery("from Land where bhk=:bhk and transactionType=:trntype");
-		query.setParameter("bhk", land.getBhk());
-		query.setParameter("trntype", land.getTransactionType());
-		List<Land> landDetails = query.list();
-		return landDetails;
+		Connection connection = ConnectionUtil.getConnection();
+		List<Land> landDetailsList = new ArrayList<Land>();
+		String query = "select "
+				+ "u.name,u.phonenumber,u.email, "
+				+ "p.name as propertyname, "
+				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description, "
+				+ "c.name as cityname,l.name as locationname  from RL_EST_LAND lu "
+				+ "join RL_EST_PROPERTYTYPE p on lu.property_id=p.property_id "
+				+ "join RL_EST_LOCATION l on lu.location_id=l.location_id "
+				+ "join RL_EST_CITY c on c.city_id = l.city_id "
+				+ "join RL_EST_LAND_USER u on u.user_id=lu.user_id "
+				+ "where lu.transaction_type=? and lu.bhk=?  ";
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, land.getTransactionType());
+			preparedStatement.setInt(2, land.getBhk());
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet != null) {
+				while (resultSet.next()) {
+					Land addLandDetails = new Land();
+					Users user = new Users();
+					user.setName(resultSet.getString("name"));
+					user.setEmail(resultSet.getString("email"));
+					user.setMobilenumber(resultSet.getLong("phonenumber"));
+					addLandDetails.setUser(user);
+					Property property = new Property();
+					property.setName(resultSet.getString("propertyname"));
+					addLandDetails.setProperty(property);
+					Location location = new Location();
+					City city = new City();
+					city.setName(resultSet.getString("cityname"));
+					location.setCity(city);
+					location.setName(resultSet.getString("locationname"));
+					addLandDetails.setLocation(location);
+					addLandDetails.setBhk(resultSet.getInt("bhk"));
+					addLandDetails.setBuildingName(resultSet
+							.getString("building_name"));
+					addLandDetails.setSize(resultSet.getInt("land_size"));
+					addLandDetails.setTransactionType(resultSet
+							.getString("transaction_type"));
+					addLandDetails.setPurchaseType(resultSet
+							.getString("purchasetype"));
+					addLandDetails.setDescription(resultSet
+							.getString("description"));
+					addLandDetails.setDiscount(resultSet.getInt("discount"));
+					landDetailsList.add(addLandDetails);
+				}
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return landDetailsList;
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public List<Land> filerLandByPriceTrnType(Land land) {
-		Query<Land> query = session
-				.createQuery("from Land where price=:price and transactionType=:trntype");
+		Connection connection = ConnectionUtil.getConnection();
+		List<Land> landDetailsList = new ArrayList<Land>();
+		String query = "select "
+				+ "u.name,u.phonenumber,u.email, "
+				+ "p.name as propertyname, "
+				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description, "
+				+ "c.name as cityname,l.name as locationname  from RL_EST_LAND lu "
+				+ "join RL_EST_PROPERTYTYPE p on lu.property_id=p.property_id "
+				+ "join RL_EST_LOCATION l on lu.location_id=l.location_id "
+				+ "join RL_EST_CITY c on c.city_id = l.city_id "
+				+ "join RL_EST_LAND_USER u on u.user_id=lu.user_id "
+				+ "where lu.transaction_type=? and lu.price=? ";
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, land.getTransactionType());
+			preparedStatement.setBigDecimal(2, land.getPrice());
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet != null) {
+				while (resultSet.next()) {
+					Land addLandDetails = new Land();
+					Users user = new Users();
+					user.setName(resultSet.getString("name"));
+					user.setEmail(resultSet.getString("email"));
+					user.setMobilenumber(resultSet.getLong("phonenumber"));
+					addLandDetails.setUser(user);
+					Property property = new Property();
+					property.setName(resultSet.getString("propertyname"));
+					addLandDetails.setProperty(property);
+					Location location = new Location();
+					City city = new City();
+					city.setName(resultSet.getString("cityname"));
+					location.setCity(city);
+					location.setName(resultSet.getString("locationname"));
+					addLandDetails.setLocation(location);
+					addLandDetails.setBhk(resultSet.getInt("bhk"));
+					addLandDetails.setBuildingName(resultSet
+							.getString("building_name"));
+					addLandDetails.setSize(resultSet.getInt("land_size"));
+					addLandDetails.setTransactionType(resultSet
+							.getString("transaction_type"));
+					addLandDetails.setPurchaseType(resultSet
+							.getString("purchasetype"));
+					addLandDetails.setDescription(resultSet
+							.getString("description"));
+					addLandDetails.setDiscount(resultSet.getInt("discount"));
+					landDetailsList.add(addLandDetails);
+				}
+			}
 
-		query.setParameter("price", land.getPrice());
-		query.setParameter("trntype", land.getTransactionType());
-		List<Land> landDetails = query.list();
-		return landDetails;
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return landDetailsList;
+	}
+	
+	public List<Land> basicFiler(Land land) {
+		Connection connection = ConnectionUtil.getConnection();
+		List<Land> landDetailsList = new ArrayList<Land>();
+		String query = "select "
+				+ "u.name,u.phonenumber,u.email, "
+				+ "p.name as propertyname, "
+				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description, "
+				+ "c.name as cityname,l.name as locationname  from RL_EST_LAND lu "
+				+ "join RL_EST_PROPERTYTYPE p on lu.property_id=p.property_id "
+				+ "join RL_EST_LOCATION l on lu.location_id=l.location_id "
+				+ "join RL_EST_CITY c on c.city_id = l.city_id "
+				+ "join RL_EST_LAND_USER u on u.user_id=lu.user_id "
+				+ "where lu.purchasetype=? and lu.property_id=? and lu.location_id in (select location_id from RL_EST_LOCATION where city_id=?)";
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, land.getPurchaseType());
+			preparedStatement.setInt(2, land.getProperty().getId());
+			preparedStatement.setInt(3, land.getLocation().getCity().getId());
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet != null) {
+				while (resultSet.next()) {
+					Land addLandDetails = new Land();
+					Users user = new Users();
+					user.setName(resultSet.getString("name"));
+					user.setEmail(resultSet.getString("email"));
+					user.setMobilenumber(resultSet.getLong("phonenumber"));
+					addLandDetails.setUser(user);
+					Property property = new Property();
+					property.setName(resultSet.getString("propertyname"));
+					addLandDetails.setProperty(property);
+					Location location = new Location();
+					City city = new City();
+					city.setName(resultSet.getString("cityname"));
+					location.setCity(city);
+					location.setName(resultSet.getString("locationname"));
+					addLandDetails.setLocation(location);
+					addLandDetails.setBhk(resultSet.getInt("bhk"));
+					addLandDetails.setBuildingName(resultSet
+							.getString("building_name"));
+					addLandDetails.setSize(resultSet.getInt("land_size"));
+					addLandDetails.setTransactionType(resultSet
+							.getString("transaction_type"));
+					addLandDetails.setPurchaseType(resultSet
+							.getString("purchasetype"));
+					addLandDetails.setDescription(resultSet
+							.getString("description"));
+					addLandDetails.setDiscount(resultSet.getInt("discount"));
+					landDetailsList.add(addLandDetails);
+				}
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return landDetailsList;
 	}
 
 	@Override
 	public List<Land> getLandDetailsById(Land land) {
 		Connection connection = ConnectionUtil.getConnection();
+		List<Land> landDetailsList = new ArrayList<Land>();
 		String query = "select "
 				+ "u.name,u.email,u.password,u.PHONENUMBER, "
 				+ "land.price,land.bhk,land.BUILDING_NAME,land.LAND_SIZE,land.TRANSACTION_TYPE,land.PURCHASETYPE,land.DISCOUNT,land.DESCRIPTION, "
@@ -105,35 +336,36 @@ public class FilterDAOImpl implements FilterDAO {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setLong(1, land.getUser().getId());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			if(resultSet!=null)
-			{
-				List<Land> landDetailsList=new ArrayList<Land>();
-				while(resultSet.next())
-				{
-					Land addLandDetails=new Land();
-					Users user=new Users();
+			if (resultSet != null) {
+				while (resultSet.next()) {
+					Land addLandDetails = new Land();
+					Users user = new Users();
 					user.setName(resultSet.getString("name"));
 					user.setEmail(resultSet.getString("email"));
 					user.setPassword(resultSet.getString("password"));
 					user.setMobilenumber(resultSet.getLong("phonenumber"));
-					land.setUser(user);
-					Property property=new Property();
-					property.setName(resultSet.getString("propertyname"))	;
-					land.setProperty(property);
-					Location location=new Location();
-					City city=new City();
+					addLandDetails.setUser(user);
+					Property property = new Property();
+					property.setName(resultSet.getString("propertyname"));
+					addLandDetails.setProperty(property);
+					Location location = new Location();
+					City city = new City();
 					city.setName(resultSet.getString("cityname"));
 					location.setCity(city);
 					location.setName(resultSet.getString("locationname"));
-					land.setLocation(location);
-					land.setBhk(resultSet.getInt("bhk"));
-					land.setBuildingName(resultSet.getString("building_name"));
-					land.setSize(resultSet.getInt("land_size"));
-					land.setTransactionType(resultSet.getString("transaction_type"));
-					land.setPurchaseType(resultSet.getString("purchasetype"));
-					land.setDescription(resultSet.getString("description"));
-					land.setDiscount(resultSet.getInt("discount"));
-					landDetailsList.add(land);
+					addLandDetails.setLocation(location);
+					addLandDetails.setBhk(resultSet.getInt("bhk"));
+					addLandDetails.setBuildingName(resultSet
+							.getString("building_name"));
+					addLandDetails.setSize(resultSet.getInt("land_size"));
+					addLandDetails.setTransactionType(resultSet
+							.getString("transaction_type"));
+					addLandDetails.setPurchaseType(resultSet
+							.getString("purchasetype"));
+					addLandDetails.setDescription(resultSet
+							.getString("description"));
+					addLandDetails.setDiscount(resultSet.getInt("discount"));
+					landDetailsList.add(addLandDetails);
 				}
 			}
 
@@ -142,7 +374,7 @@ public class FilterDAOImpl implements FilterDAO {
 			e.printStackTrace();
 		}
 
-		return null;
+		return landDetailsList;
 	}
 
 }

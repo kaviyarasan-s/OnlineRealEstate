@@ -1,5 +1,6 @@
 package com.chainsys.realestate.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.chainsys.realestate.dao.FilterDAO;
@@ -13,33 +14,39 @@ public class FilterImpl implements Filter {
 	public List<Land> filterLandsDetails(Land land) {
 
 		List<Land> landDetails = null;
-		
-		if (validateFilterDetails()) {
-			FilterDAO filterDAO = new FilterDAOImpl();
-			if (land.getBhk() > 0 && land.getPrice() != null
-					&& "".equals(land.getTransactionType())
-					&& !land.getTransactionType().isEmpty()) {
+			if (validateFilterDetails()) {
+				FilterDAO filterDAO = new FilterDAOImpl();
+				if (land.getBhk() > 0 && land.getPrice() != null
+						&& land.getPrice() != BigDecimal.ZERO
+						&& !"".equals(land.getTransactionType())
+						&& !land.getTransactionType().isEmpty()) {
 
-				landDetails = filterDAO.filerLandByBhkPriceTrnType(land);
+					landDetails = filterDAO.filerLandByBhkPriceTrnType(land);
 
-			} else if (land.getBhk() > 0 && land.getPrice() != null) {
+				} else if (land.getBhk() > 0 && land.getPrice() != null
+						&& land.getPrice() != BigDecimal.ZERO) {
 
-				landDetails = filterDAO.filerLandByBhkPrice(land);
+					landDetails = filterDAO.filerLandByBhkPrice(land);
 
-			} else if (land.getPrice() != null
-					&& "".equals(land.getTransactionType())
-					&& !land.getTransactionType().isEmpty()) {
+				} else if (land.getPrice() != null
+						&& land.getPrice() != BigDecimal.ZERO
+						&& !"".equals(land.getTransactionType())
+						&& !land.getTransactionType().isEmpty()) {
 
-				landDetails = filterDAO.filerLandByPriceTrnType(land);
+					landDetails = filterDAO.filerLandByPriceTrnType(land);
 
-			} else if (land.getBhk() > 0
-					&& "".equals(land.getTransactionType())
-					&& !land.getTransactionType().isEmpty()) {
+				} else if (land.getBhk() > 0
+						&& !"".equals(land.getTransactionType())
+						&& !land.getTransactionType().isEmpty()) {
 
-				landDetails = filterDAO.filerLandByBhkTrnType(land);
+					landDetails = filterDAO.filerLandByBhkTrnType(land);
+				} else if (land.getProperty().getId() > 0
+						&& land.getLocation().getCity().getId() > 0
+						&& land.getPurchaseType() != null
+						&& !land.getPurchaseType().isEmpty()) {
+					landDetails = filterDAO.basicFiler(land);
+				}
 			}
-
-		}
 		return landDetails;
 	}
 

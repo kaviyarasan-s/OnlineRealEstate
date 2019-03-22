@@ -6,8 +6,57 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Change new password</title>
 </head>
-<body>
-	<div class="col-md-12">
+<body style="background-image: url('images/bg-01.jpg');">
+	<div class="container">
+		<div class="row">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="text-center">
+								<h3>
+									<i class="fa fa-lock fa-4x"></i>
+								</h3>
+								<h2 class="text-center">Change password</h2>
+								<div class="panel-body">
+									<form class="form" method="post" action="ChangePassword">
+										<fieldset>
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i
+														class="glyphicon glyphicon-lock color-blue"></i></span> <input
+														id="emailInput" placeholder="Enter new password"
+														class="form-control" type="text" name="newpassword"
+														oninvalid="setCustomValidity('Please enter a valid password!')"
+														onchange="try{setCustomValidity('')}catch(e){}"
+														required="">
+												</div>
+											</div>
+											<div class="form-group">
+												<input class="btn btn-lg btn-primary btn-block"
+													value="change" name="button" type="submit">
+											</div>
+											<div>
+												<a href="forgotpassword.jsp">Back</a>
+											</div>
+											<div>
+												<%
+													if (request.getAttribute("MESSAGE") != null) {
+														out.print(request.getAttribute("MESSAGE"));
+													}
+												%>
+											</div>
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="col-md-12">
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
 			<form method="post" action="ChangePassword">
@@ -20,7 +69,7 @@
 			</form>
 		</div>
 		<div class="col-md-4"></div>
-	</div>
+	</div> -->
 </body>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="javascript/bootstrap.min.js"></script>

@@ -8,12 +8,12 @@
 <title>Home</title>
 </head>
 <body>
-	<div class="col-md-12" style="color: red">
+	<div class="col-md-12" style="background-color: black">
 		<div class="col-md-8">
-			<h4>Chain sys india promotors</h4>
+			<span style="color:red">Chain </span><span style="color:white">. sys</span> <span style="color:white">india promotors</span>
 		</div>
 		<div class="col-md-4">
-			<div>
+			<div style="color:white">
 				<%
 					String email = request.getAttribute("email").toString();
 					if (email != null && !email.isEmpty()) {
@@ -21,7 +21,7 @@
 					}
 				%>
 			</div>
-			<div>
+			<div style="color:white">
 				<a href="ServletLogout">Sign out</a>
 			</div>
 		</div>
@@ -30,7 +30,7 @@
 		<div class="col-md-12">
 			<div class="col-md-2">
 				<div class="col-md-12">
-					<a href="profile.html">Profile</a>
+					<a href="ServletGetProfile">Profile</a>
 				</div>
 				<div class="col-md-12">
 					<a href="ServletPostLand">Sale land</a>
@@ -44,8 +44,8 @@
 					<div class="col-md-4">
 						<div>Property Type</div>
 						<div>
-							<select name="propertytype">
-								<option value="0">---Choose---</option>
+							<select name="propertytype" required>
+								<option value="">---Choose---</option>
 								<c:forEach var="propertyinfo" items="${PROPERTYINFO}">
 									<option value="${propertyinfo.id}">${propertyinfo.name}</option>
 								</c:forEach>
@@ -55,8 +55,8 @@
 					<div class="col-md-4">
 						<div>City</div>
 						<div>
-							<select name="city" id="city">
-								<option value="0">---Choose---</option>
+							<select name="city" id="city" required>
+								<option value="">---Choose---</option>
 								<c:forEach var="cityinfo" items="${CITY}">
 									<option value="${cityinfo.id}">${cityinfo.name}</option>
 								</c:forEach>
@@ -66,8 +66,8 @@
 					<div class="col-md-4">
 						<div>Purchase Type</div>
 						<div>
-							<select name="purchasetype">
-								<option value="0">---Choose---</option>
+							<select name="purchasetype" required	>
+								<option value="">---Choose---</option>
 								<option value="Rent">Rent</option>
 								<option value="Sale">Buy</option>
 							</select>
@@ -76,7 +76,30 @@
 					<div class="col-md-12" style="margin-top: 2%">
 						<button class="btn btn-info">Search</button>
 					</div>
+					<div class="col-md-12" style="margin-top: 2%">
+						<c:if test="${LANDDETAILS!=null}">
+							<c:forEach var="landdetails" items="${LANDDETAILS}">
+								<div>Owner name:${landdetails.user.name}</div>
+								<div>Owner contact details:
+									Email:${landdetails.user.email}</div>
+								<div>Mobile number:${landdetails.user.mobilenumber}</div>
+								<div>Property type:${landdetails.property.name}</div>
+								<div>Building name:${landdetails.buildingName}</div>
+								<div>Land size: ${landdetails.size}</div>
+								<div>BHK: ${landdetails.bhk}</div>
+								<div>Price: ${landdetails.price}</div>
+								<div>Location name: ${landdetails.location.name}</div>
+								<div>City name: ${landdetails.location.city.name}</div>
+								<div>Transaction type: ${landdetails.transactionType}</div>
+								<div>Purchase type: ${landdetails.purchaseType}</div>
+								<div>Discount: ${landdetails.discount}</div>
+								<div>Description: ${landdetails.description}</div>
+							</c:forEach>
+						</c:if>
+					</div>
+
 				</div>
+
 			</div>
 			<div class="col-md-4">
 				<div class="col-md-12">

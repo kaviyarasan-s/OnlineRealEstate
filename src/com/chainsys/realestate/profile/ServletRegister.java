@@ -52,7 +52,7 @@ public class ServletRegister extends HttpServlet {
 					.getRequestDispatcher("register.jsp");
 			requestDispatcher.forward(request, response);
 		} else {
-			request.setAttribute("MESSAGE", Constant.regiterFailedMessage);
+			request.setAttribute("MESSAGE", Constant.inputNotValidMessage);
 			RequestDispatcher requestDispatcher = request
 					.getRequestDispatcher("register.jsp");
 			requestDispatcher.forward(request, response);

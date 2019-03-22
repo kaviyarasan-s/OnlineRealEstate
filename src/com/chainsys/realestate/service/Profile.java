@@ -14,4 +14,6 @@ public interface Profile {
 	
 	boolean editProfile(Users user);
 	
+	Users getUserDetailsByEmail(Users user);
+	
 }

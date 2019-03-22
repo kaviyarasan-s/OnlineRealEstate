@@ -7,6 +7,7 @@ import com.chainsys.realestate.dao.impl.UserDAOImpl;
 import com.chainsys.realestate.model.Users;
 import com.chainsys.realestate.service.Profile;
 import com.chainsys.realestate.validate.ProfileValidation;
+import com.chainsys.realestate.validate.Validate;
 
 public class ProfileImpl implements Profile {
 	/*
@@ -23,8 +24,10 @@ public class ProfileImpl implements Profile {
 		registerResult = userDAO.addUserDetails(user);
 		return registerResult;
 	}
+
 	/*
 	 * Validate user information
+	 * 
 	 * @see
 	 * com.chainsys.realestate.service.Profile#validateUserInfo(com.chainsys
 	 * .realestate.model.Users)
@@ -33,8 +36,10 @@ public class ProfileImpl implements Profile {
 	public boolean validateUserInfo(Users user) {
 		return ProfileValidation.userValidation(user);
 	}
+
 	/*
 	 * Change password
+	 * 
 	 * @see com.chainsys.realestate.service.Profile#changePassword(com.chainsys.
 	 * realestate.model.Users)
 	 */
@@ -49,8 +54,10 @@ public class ProfileImpl implements Profile {
 		success = userDAO.changePassword(updatedUserDetails);
 		return success;
 	}
+
 	/*
 	 * Check forgot password is present or not
+	 * 
 	 * @see
 	 * com.chainsys.realestate.service.Profile#checkForgotPasswordEmail(com.
 	 * chainsys.realestate.model.Users)
@@ -67,8 +74,10 @@ public class ProfileImpl implements Profile {
 		}
 		return valid;
 	}
+
 	/*
 	 * Edit profile informations
+	 * 
 	 * @see
 	 * com.chainsys.realestate.service.Profile#editProfile(com.chainsys.realestate
 	 * .model.Users)
@@ -77,7 +86,7 @@ public class ProfileImpl implements Profile {
 	public boolean editProfile(Users user) {
 		boolean success = false;
 		UserDAO userDAO = new UserDAOImpl();
-		Users updatedUserDetails = userDAO.getUserDetailsById(user);
+		Users updatedUserDetails = userDAO.getUserDetailsByEmail(user);
 		if (user.getName() != null && !user.getName().isEmpty()) {
 			updatedUserDetails.setName(user.getName());
 		}
@@ -90,13 +99,19 @@ public class ProfileImpl implements Profile {
 		if (String.valueOf(user.getMobilenumber()).length() == 10) {
 			updatedUserDetails.setMobilenumber(user.getMobilenumber());
 		}
-		updatedUserDetails.setCreatedDate(user.getCreatedDate());
-		updatedUserDetails.setModifiedBy(user.getId());
+		updatedUserDetails.setModifiedBy(updatedUserDetails.getId());
 		updatedUserDetails.setModifiedDate(LocalDateTime.now());
-		if (validateUserInfo(user)) {
-			success = userDAO.editProfileInfo(updatedUserDetails);
-		}
-
+		success = userDAO.editProfileInfo(updatedUserDetails);
 		return success;
+	}
+
+	@Override
+	public Users getUserDetailsByEmail(Users user) {
+		UserDAO userDAO = new UserDAOImpl();
+		Users userDetails = null;
+		if (Validate.emailValidate(user.getEmail())) {
+			userDetails = userDAO.getUserDetailsByEmail(user);
+		}
+		return userDetails;
 	}
 }

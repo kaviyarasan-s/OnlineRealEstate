@@ -1,7 +1,6 @@
 package com.chainsys.realestate.profile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,36 +25,56 @@ public class ServletEditProfile extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		String button = request.getParameter("button");
+		request.setAttribute(button, true);
+		Profile profile=new ProfileImpl();
+		HttpSession httpSession=request.getSession();
+		String email=httpSession.getAttribute("email").toString();
+		Users user=new Users();
+		user.setEmail(email);
+		Users userDetails=profile.getUserDetailsByEmail(user);
+		request.setAttribute("USERDETAILS", userDetails);
+		RequestDispatcher requestDispatcher=request.getRequestDispatcher("profile.jsp");
+		requestDispatcher.forward(request, response);
+
 	}
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		String button = request.getParameter("button");
+		request.setAttribute(button, false);
 		Users user = new Users();
-		user.setName(request.getParameter("name"));
-		user.setEmail(request.getParameter("email"));
-		user.setPassword(request.getParameter("password"));
-		String number = request.getParameter("phonenumber");
-		if (!number.isEmpty() && number != null) {
-			user.setMobilenumber(Long.parseLong(number));
+		if (request.getParameter("button").equals("editname")) {
+			user.setName(request.getParameter("name"));
 		}
-		HttpSession httpSession = request.getSession();
-		long userId = (long) httpSession.getAttribute("userid");
-		user.setId(userId);
-		user.setModifiedBy(userId);
-		user.setModifiedDate(LocalDateTime.now());
+		if (request.getParameter("button").equals("editemail")) {
+			user.setEmail(request.getParameter("email"));
+		}
+		if (request.getParameter("button").equals("editpassword")) {
+			user.setPassword(request.getParameter("password"));
+		}
+		if (request.getParameter("button").equals("editphonenumber")) {
+			String number = request.getParameter("phonenumber");
+			if (!number.isEmpty() && number != null) {
+				user.setMobilenumber(Long.parseLong(number));
+			}
+		}		
 		Profile profile = new ProfileImpl();
-		boolean success = profile.editProfile(user);
+		HttpSession httpSession = request.getSession();
+		String email = httpSession.getAttribute("email").toString();
+		user.setEmail(email);
+				boolean success = profile.editProfile(user);
+		Users userDetails=profile.getUserDetailsByEmail(user);
+		request.setAttribute("USERDETAILS", userDetails);
 		if (success) {
 			request.setAttribute("MESSAGE", Constant.updateSuccessMessage);
 			RequestDispatcher requestDispatcher = request
-					.getRequestDispatcher("register.jsp");
+					.getRequestDispatcher("profile.jsp");
 			requestDispatcher.forward(request, response);
-		}
-		else
-		{
+		} else {
 			request.setAttribute("MESSAGE", Constant.updateFailureMessage);
 			RequestDispatcher requestDispatcher = request
-					.getRequestDispatcher("register.jsp");
+					.getRequestDispatcher("profile.jsp");
 			requestDispatcher.forward(request, response);
 		}
 	}
