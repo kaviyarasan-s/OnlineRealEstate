@@ -84,14 +84,13 @@ ul, li {
 
 
 /*---------------------------------------------*/
-input {
-	outline: none;
+input[type="email"],input[type="password"] {
 	border: none;
+	outline: none;
 }
 
 textarea {
-  outline: none;
-  border: none;
+  
 }
 
 textarea:focus, input:focus {
