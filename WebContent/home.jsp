@@ -10,7 +10,7 @@
 <body>
 	<div class="col-md-12" style="background-color: black">
 		<div class="col-md-8">
-			<span style="color:red">Chain </span><span style="color:white">. sys</span> <span style="color:white">india promotors</span>
+			<span style="color:red">Chain</span><span style="color:white">.sys</span> <span style="color:white">india promotors</span>
 		</div>
 		<div class="col-md-4">
 			<div style="color:white">
