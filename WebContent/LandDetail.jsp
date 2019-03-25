@@ -8,6 +8,29 @@
 <title>Register land details</title>
 <script src="https://code.jquery.com/jquery-1.10.2.js"
 	type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css"
+	href="vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+	href="fonts/iconic/css/material-design-iconic-font.min.css">
+<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<link rel="stylesheet" type="text/css"
+	href="vendor/css-hamburgers/hamburgers.min.css">
+<link rel="stylesheet" type="text/css"
+	href="vendor/animsition/css/animsition.min.css">
+<link rel="stylesheet" type="text/css"
+	href="vendor/select2/select2.min.css">
+<link rel="stylesheet" type="text/css"
+	href="vendor/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" type="text/css" href="css/util.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<style>
+	.wrap-login100
+	{
+		width:55%;
+	}
+</style>
 <script type="text/javascript">
 	$(document)
 			.ready(
@@ -48,12 +71,21 @@
 </script>
 </head>
 <body>
-	<form method="post" action="ServletPostLand">
-		<center>
-			<h4>Sale Land</h4>
-		</center>
-		<br /> <br />
-		<table border="0" align="center" width="590px" height="800px">
+	<div class="limiter">
+		<div class="container-login100"
+			style="background-image: url('images/bg-01.jpg');">
+		<div class="fixed-top">
+		<div class="form-row">
+			<div id="buttonDiv" class="md-form">
+				<a href="ServletHome" class="btn btn-danger"><span class="glyphicon glyphicon-arrow-left">
+				</span> Back</a>
+			</div>
+		</div>
+	</div>
+			<div class="wrap-login100 p-l-60 p-r-60 p-t-65 p-b-54">	
+	<form method="post" class="login100-form validate-form" action="ServletPostLand">
+		<span class="login100-form-title p-b-49"> Sale Land </span>
+		<table border="0" align="center" width="615px" height="800px">
 			<tr>
 				<td>Property Type</td>
 				<td><select name="propertytype">
@@ -161,23 +193,19 @@
 				<td><textarea rows="4" cols="33" name="description"></textarea>
 				</td>
 			</tr>
-			<tr>
-				<td>
-					<button type="submit" name="Enter">Submit</button>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>${MESSAGE}</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td><a href="ServletHome">Back</a></td>
-			</tr>
-		</table>
+			</table>
+			<br/>
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+					<button class="login100-form-btn" type="submit" name="Enter">Submit</button>
+					</div>
+					</div>
+					
+			<center> ${MESSAGE} </center>
 	</form>
+	</div>
+	</div>
+	</div>
 </body>
 </html>
