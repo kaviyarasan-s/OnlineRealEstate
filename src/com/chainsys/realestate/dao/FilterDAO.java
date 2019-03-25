@@ -10,7 +10,8 @@ public interface FilterDAO {
 	List<Land> filerLandByBhkPrice(Land land);
 	List<Land> filerLandByBhkTrnType(Land land);
 	List<Land> filerLandByPriceTrnType(Land land);
-	List<Land> getLandDetailsById(Land land);
+//	List<Land> getLandDetailsById(Land land);
 	List<Land> basicFiler(Land land);
+	List<Land> filerLandByBhkOrPriceOrTrnType(Land land);
 	
 }

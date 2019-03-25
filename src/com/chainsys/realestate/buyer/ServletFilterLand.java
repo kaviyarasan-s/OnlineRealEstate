@@ -38,14 +38,14 @@ public class ServletFilterLand extends HttpServlet {
 		Land land = new Land();
 		ServiceLand serviceLand = new ServiceLandImpl();
 		String propertyId = request.getParameter("propertytype");
-		if (!propertyId.isEmpty() && propertyId != null) {
+		if (propertyId != null && !propertyId.isEmpty()) {
 			Property property = new Property();
 			property.setId(Integer.parseInt(propertyId));
 			Property propertyDetails = serviceLand.getPropertyDetails(property);
 			land.setProperty(propertyDetails);
 		}
 		String cityId = request.getParameter("city");
-		if (!cityId.isEmpty() && cityId != null) {
+		if (cityId != null && !cityId.isEmpty()) {
 			City city = new City();
 			city.setId(Integer.parseInt(cityId));
 			City cityDetails = serviceLand.getCityDetails(city);
@@ -54,21 +54,36 @@ public class ServletFilterLand extends HttpServlet {
 			land.setLocation(location);
 		}
 		String purchaseType = request.getParameter("purchasetype");
-		if (!purchaseType.isEmpty() && purchaseType != null) {
+		if (purchaseType != null && !purchaseType.isEmpty()) {
 			land.setPurchaseType(purchaseType);
 		}
 		int bhk = Integer.parseInt(request.getParameter("bhk"));
 		String price = request.getParameter("price");
 		double priceAmount = 0;
-		if (!price.isEmpty() && price != null)
+		if (price != null && !price.isEmpty()) {
 			priceAmount = Double.parseDouble(price);
-		String transactionType = request.getParameter("transactiontype");
-		if (!price.isEmpty() && price != null)
 			land.setPrice(BigDecimal.valueOf(priceAmount));
-		if (bhk > 0)
+		}
+		else
+		{
+			land.setPrice(BigDecimal.valueOf(0));
+		}
+		String transactionType = request.getParameter("transactiontype");
+		if (bhk > 0) {
 			land.setBhk(bhk);
-		if (!transactionType.isEmpty() && transactionType != null)
+		}
+		else
+		{
+			land.setBhk(0);
+		}
+		System.out.println(transactionType);
+		if (transactionType != null && !transactionType.isEmpty()) {
 			land.setTransactionType(transactionType);
+		}
+		else
+		{
+			land.setTransactionType("");
+		}
 		Filter filter = new FilterImpl();
 		if (land.getProperty() != null && land.getPurchaseType() != null
 				&& !land.getPurchaseType().isEmpty()
@@ -82,6 +97,12 @@ public class ServletFilterLand extends HttpServlet {
 		List<Property> propertyList = serviceLand.getAllProperty();
 		List<City> cityList = serviceLand.getAllCity();
 		request.setAttribute("email", httpSession.getAttribute("email"));
+		request.setAttribute("proprtype", propertyId);
+		request.setAttribute("cityid", cityId);
+		request.setAttribute("bhk", bhk);
+		request.setAttribute("price", priceAmount);
+		request.setAttribute("trntype", transactionType);
+		request.setAttribute("purchase", purchaseType);
 		request.setAttribute("PROPERTYINFO", propertyList);
 		request.setAttribute("CITY", cityList);
 		RequestDispatcher requestDispatcher = request

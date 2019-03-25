@@ -17,34 +17,33 @@ import com.sun.istack.NotNull;
 public class Users {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO,generator="rl_est_user_id_seq")	
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "rl_est_user_id_seq")
 	@Column(name = "user_id", updatable = false, nullable = false)
 	private long id;
-	
+
 	@Column(name = "name")
 	@NotNull
 	private String name;
-	
+
 	@Column(name = "email")
 	@NotNull
 	private String email;
-	
+
 	@Column(name = "password")
 	@NotNull
 	private String password;
-	
+
 	@Column(name = "phonenumber")
 	@NotNull
 	private long mobilenumber;
-	
-	
+
 	@Column(name = "createddate")
 	private LocalDateTime createdDate;
-	
-	@JoinColumn(name="user_id")
+
+	@JoinColumn(name = "user_id")
 	@Column(name = "modifiedby")
 	private long modifiedBy;
-	
+
 	@Column(name = "modifieddate")
 	private LocalDateTime modifiedDate;
 
@@ -62,7 +61,8 @@ public class Users {
 	}
 
 	public void setName(String name) {
-		if (!name.equals(null) && !name.isEmpty())
+		String stringRegex = "^([a-zA-Z]+)$";
+		if (name != null && !name.isEmpty() && name.matches(stringRegex))
 			this.name = name;
 	}
 
@@ -71,7 +71,8 @@ public class Users {
 	}
 
 	public void setEmail(String email) {
-		if (!email.equals(null) && !email.isEmpty())
+		String emailRegex = "^([a-zA-Z0-9]+)@([a-zA-Z]+).([a-z]{2,3})$";
+		if (email != null && !email.isEmpty() && email.matches(emailRegex))
 			this.email = email;
 	}
 
@@ -80,7 +81,9 @@ public class Users {
 	}
 
 	public void setPassword(String password) {
-		if (!password.equals(null) && !password.isEmpty())
+		String passwordRegex = "^([a-zA-Z0-9$@]+)$";
+		if (password != null && !password.isEmpty()
+				&& password.matches(passwordRegex))
 			this.password = password;
 	}
 
@@ -89,11 +92,12 @@ public class Users {
 	}
 
 	public void setMobilenumber(long mobilenumber) {
-		if (String.valueOf(mobilenumber).length() == 10)
+		String numberRegex = "^([0-9]+)$";
+		String mbleno = String.valueOf(mobilenumber);
+		if (mbleno.length() == 10 && mbleno.matches(numberRegex))
 			this.mobilenumber = mobilenumber;
 	}
 
-	
 	public LocalDateTime getCreatedDate() {
 		return createdDate;
 	}
@@ -101,8 +105,8 @@ public class Users {
 	public void setCreatedDate(LocalDateTime createdDate) {
 		this.createdDate = createdDate;
 	}
-	
-	@JoinColumn(name="user_id")
+
+	@JoinColumn(name = "user_id")
 	public long getModifiedBy() {
 		return modifiedBy;
 	}
@@ -123,9 +127,8 @@ public class Users {
 	public String toString() {
 		return "Users [id=" + id + ", name=" + name + ", email=" + email
 				+ ", password=" + password + ", mobilenumber=" + mobilenumber
-				+  ", createdDate=" + createdDate
-				+ ", modifiedBy=" + modifiedBy + ", modifiedDate="
-				+ modifiedDate + "]";
+				+ ", createdDate=" + createdDate + ", modifiedBy=" + modifiedBy
+				+ ", modifiedDate=" + modifiedDate + "]";
 	}
 
 }

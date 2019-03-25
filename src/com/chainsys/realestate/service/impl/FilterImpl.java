@@ -14,8 +14,13 @@ public class FilterImpl implements Filter {
 	public List<Land> filterLandsDetails(Land land) {
 
 		List<Land> landDetails = null;
-			if (validateFilterDetails()) {
-				FilterDAO filterDAO = new FilterDAOImpl();
+		FilterDAO filterDAO = new FilterDAOImpl();
+		if (validateFilterDetails()) {
+			if (land.getProperty().getId() > 0
+					&& land.getLocation().getCity().getId() > 0
+					&& land.getPurchaseType() != null
+					&& !land.getPurchaseType().isEmpty()) {
+				System.out.println(land.getBhk()+" "+land.getPrice()+" "+land.getTransactionType());
 				if (land.getBhk() > 0 && land.getPrice() != null
 						&& land.getPrice() != BigDecimal.ZERO
 						&& !"".equals(land.getTransactionType())
@@ -38,8 +43,20 @@ public class FilterImpl implements Filter {
 				} else if (land.getBhk() > 0
 						&& !"".equals(land.getTransactionType())
 						&& !land.getTransactionType().isEmpty()) {
-
+					
 					landDetails = filterDAO.filerLandByBhkTrnType(land);
+				} else if (land.getBhk() > 0) {
+
+					landDetails = filterDAO
+							.filerLandByBhkOrPriceOrTrnType(land);
+				} else if (land.getPrice() != null
+						&& land.getPrice() != BigDecimal.ZERO) {
+					landDetails = filterDAO
+							.filerLandByBhkOrPriceOrTrnType(land);
+				} else if (!"".equals(land.getTransactionType())
+						&& !land.getTransactionType().isEmpty()) {
+					landDetails = filterDAO
+							.filerLandByBhkOrPriceOrTrnType(land);
 				} else if (land.getProperty().getId() > 0
 						&& land.getLocation().getCity().getId() > 0
 						&& land.getPurchaseType() != null
@@ -47,6 +64,8 @@ public class FilterImpl implements Filter {
 					landDetails = filterDAO.basicFiler(land);
 				}
 			}
+
+		}
 		return landDetails;
 	}
 

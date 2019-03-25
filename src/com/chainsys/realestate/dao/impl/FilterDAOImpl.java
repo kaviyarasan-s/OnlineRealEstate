@@ -1,5 +1,6 @@
 package com.chainsys.realestate.dao.impl;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +24,7 @@ public class FilterDAOImpl implements FilterDAO {
 		String query = "select "
 				+ "u.name,u.phonenumber,u.email, "
 				+ "p.name as propertyname, "
-				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description, "
+				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description,lu.status, "
 				+ "c.name as cityname ,l.name as locationname  from RL_EST_LAND lu "
 				+ "join RL_EST_PROPERTYTYPE p on lu.property_id=p.property_id "
 				+ "join RL_EST_LOCATION l on lu.location_id=l.location_id "
@@ -58,6 +59,7 @@ public class FilterDAOImpl implements FilterDAO {
 				location.setName(resultSet.getString("locationname"));
 				addLandDetails.setLocation(location);
 				addLandDetails.setBhk(resultSet.getInt("bhk"));
+				addLandDetails.setPrice(BigDecimal.valueOf(resultSet.getLong("price")));
 				addLandDetails.setBuildingName(resultSet
 						.getString("building_name"));
 				addLandDetails.setSize(resultSet.getInt("land_size"));
@@ -67,6 +69,7 @@ public class FilterDAOImpl implements FilterDAO {
 						.getString("purchasetype"));
 				addLandDetails.setDescription(resultSet
 						.getString("description"));
+				addLandDetails.setStatus(resultSet.getString("status"));
 				addLandDetails.setDiscount(resultSet.getInt("discount"));
 				landDetailsList.add(addLandDetails);
 			}
@@ -84,7 +87,7 @@ public class FilterDAOImpl implements FilterDAO {
 		String query = "select "
 				+ "u.name,u.phonenumber,u.email, "
 				+ "p.name as propertyname, "
-				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description, "
+				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description,lu.status, "
 				+ "c.name as cityname ,l.name as locationname  from RL_EST_LAND lu "
 				+ "join RL_EST_PROPERTYTYPE p on lu.property_id=p.property_id "
 				+ "join RL_EST_LOCATION l on lu.location_id=l.location_id "
@@ -115,6 +118,7 @@ public class FilterDAOImpl implements FilterDAO {
 					location.setName(resultSet.getString("locationname"));
 					addLandDetails.setLocation(location);
 					addLandDetails.setBhk(resultSet.getInt("bhk"));
+					addLandDetails.setPrice(BigDecimal.valueOf(resultSet.getLong("price")));
 					addLandDetails.setBuildingName(resultSet
 							.getString("building_name"));
 					addLandDetails.setSize(resultSet.getInt("land_size"));
@@ -124,6 +128,7 @@ public class FilterDAOImpl implements FilterDAO {
 							.getString("purchasetype"));
 					addLandDetails.setDescription(resultSet
 							.getString("description"));
+					addLandDetails.setStatus(resultSet.getString("status"));
 					addLandDetails.setDiscount(resultSet.getInt("discount"));
 					landDetailsList.add(addLandDetails);
 				}
@@ -144,7 +149,7 @@ public class FilterDAOImpl implements FilterDAO {
 		String query = "select "
 				+ "u.name,u.phonenumber,u.email, "
 				+ "p.name as propertyname, "
-				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description, "
+				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description,lu.status, "
 				+ "c.name as cityname,l.name as locationname  from RL_EST_LAND lu "
 				+ "join RL_EST_PROPERTYTYPE p on lu.property_id=p.property_id "
 				+ "join RL_EST_LOCATION l on lu.location_id=l.location_id "
@@ -175,6 +180,7 @@ public class FilterDAOImpl implements FilterDAO {
 					location.setName(resultSet.getString("locationname"));
 					addLandDetails.setLocation(location);
 					addLandDetails.setBhk(resultSet.getInt("bhk"));
+					addLandDetails.setPrice(BigDecimal.valueOf(resultSet.getLong("price")));
 					addLandDetails.setBuildingName(resultSet
 							.getString("building_name"));
 					addLandDetails.setSize(resultSet.getInt("land_size"));
@@ -184,6 +190,7 @@ public class FilterDAOImpl implements FilterDAO {
 							.getString("purchasetype"));
 					addLandDetails.setDescription(resultSet
 							.getString("description"));
+					addLandDetails.setStatus(resultSet.getString("status"));
 					addLandDetails.setDiscount(resultSet.getInt("discount"));
 					landDetailsList.add(addLandDetails);
 				}
@@ -204,7 +211,7 @@ public class FilterDAOImpl implements FilterDAO {
 		String query = "select "
 				+ "u.name,u.phonenumber,u.email, "
 				+ "p.name as propertyname, "
-				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description, "
+				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description,lu.status, "
 				+ "c.name as cityname,l.name as locationname  from RL_EST_LAND lu "
 				+ "join RL_EST_PROPERTYTYPE p on lu.property_id=p.property_id "
 				+ "join RL_EST_LOCATION l on lu.location_id=l.location_id "
@@ -235,6 +242,7 @@ public class FilterDAOImpl implements FilterDAO {
 					location.setName(resultSet.getString("locationname"));
 					addLandDetails.setLocation(location);
 					addLandDetails.setBhk(resultSet.getInt("bhk"));
+					addLandDetails.setPrice(BigDecimal.valueOf(resultSet.getLong("price")));
 					addLandDetails.setBuildingName(resultSet
 							.getString("building_name"));
 					addLandDetails.setSize(resultSet.getInt("land_size"));
@@ -244,6 +252,7 @@ public class FilterDAOImpl implements FilterDAO {
 							.getString("purchasetype"));
 					addLandDetails.setDescription(resultSet
 							.getString("description"));
+					addLandDetails.setStatus(resultSet.getString("status"));
 					addLandDetails.setDiscount(resultSet.getInt("discount"));
 					landDetailsList.add(addLandDetails);
 				}
@@ -263,7 +272,7 @@ public class FilterDAOImpl implements FilterDAO {
 		String query = "select "
 				+ "u.name,u.phonenumber,u.email, "
 				+ "p.name as propertyname, "
-				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description, "
+				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description,lu.status, "
 				+ "c.name as cityname,l.name as locationname  from RL_EST_LAND lu "
 				+ "join RL_EST_PROPERTYTYPE p on lu.property_id=p.property_id "
 				+ "join RL_EST_LOCATION l on lu.location_id=l.location_id "
@@ -295,6 +304,7 @@ public class FilterDAOImpl implements FilterDAO {
 					location.setName(resultSet.getString("locationname"));
 					addLandDetails.setLocation(location);
 					addLandDetails.setBhk(resultSet.getInt("bhk"));
+					addLandDetails.setPrice(BigDecimal.valueOf(resultSet.getLong("price")));
 					addLandDetails.setBuildingName(resultSet
 							.getString("building_name"));
 					addLandDetails.setSize(resultSet.getInt("land_size"));
@@ -304,6 +314,7 @@ public class FilterDAOImpl implements FilterDAO {
 							.getString("purchasetype"));
 					addLandDetails.setDescription(resultSet
 							.getString("description"));
+					addLandDetails.setStatus(resultSet.getString("status"));
 					addLandDetails.setDiscount(resultSet.getInt("discount"));
 					landDetailsList.add(addLandDetails);
 				}
@@ -318,62 +329,65 @@ public class FilterDAOImpl implements FilterDAO {
 	}
 
 	@Override
-	public List<Land> getLandDetailsById(Land land) {
+	public List<Land> filerLandByBhkOrPriceOrTrnType(Land land) {
 		Connection connection = ConnectionUtil.getConnection();
 		List<Land> landDetailsList = new ArrayList<Land>();
 		String query = "select "
-				+ "u.name,u.email,u.password,u.PHONENUMBER, "
-				+ "land.price,land.bhk,land.BUILDING_NAME,land.LAND_SIZE,land.TRANSACTION_TYPE,land.PURCHASETYPE,land.DISCOUNT,land.DESCRIPTION, "
-				+ "location.NAME as locationname,c.NAME as cityname,p.name as propertyname "
-				+ "from rl_est_land land "
-				+ "join rl_est_land_user u on u.user_id =land.user_id "
-				+ "join RL_EST_LOCATION location on land.LOCATION_ID =location.LOCATION_ID "
-				+ "join rl_est_city c on c.city_id=location.CITY_ID "
-				+ "join rl_est_propertytype p on p.property_id=land.property_id "
-				+ "where land.USER_ID=?";
+				+ "u.name,u.phonenumber,u.email, "
+				+ "p.name as propertyname, "
+				+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description,lu.status, "
+				+ "c.name as cityname ,l.name as locationname  from RL_EST_LAND lu "
+				+ "join RL_EST_PROPERTYTYPE p on lu.property_id=p.property_id "
+				+ "join RL_EST_LOCATION l on lu.location_id=l.location_id "
+				+ "join RL_EST_CITY c on c.city_id = l.city_id "
+				+ "join RL_EST_LAND_USER u on u.user_id=lu.user_id "
+				+ "where lu.bhk=? or lu.transaction_type=?  or lu.price=? and "
+				+ "(lu.purchasetype=? and lu.property_id=? and lu.location_id in (select location_id from RL_EST_LOCATION where city_id=?))";
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setLong(1, land.getUser().getId());
+			preparedStatement.setInt(1, land.getBhk());
+			preparedStatement.setString(2, land.getTransactionType());
+			preparedStatement.setBigDecimal(3, land.getPrice());
+			preparedStatement.setString(4, land.getPurchaseType());
+			preparedStatement.setInt(5, land.getProperty().getId());
+			preparedStatement.setInt(6, land.getLocation().getCity().getId());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			if (resultSet != null) {
-				while (resultSet.next()) {
-					Land addLandDetails = new Land();
-					Users user = new Users();
-					user.setName(resultSet.getString("name"));
-					user.setEmail(resultSet.getString("email"));
-					user.setPassword(resultSet.getString("password"));
-					user.setMobilenumber(resultSet.getLong("phonenumber"));
-					addLandDetails.setUser(user);
-					Property property = new Property();
-					property.setName(resultSet.getString("propertyname"));
-					addLandDetails.setProperty(property);
-					Location location = new Location();
-					City city = new City();
-					city.setName(resultSet.getString("cityname"));
-					location.setCity(city);
-					location.setName(resultSet.getString("locationname"));
-					addLandDetails.setLocation(location);
-					addLandDetails.setBhk(resultSet.getInt("bhk"));
-					addLandDetails.setBuildingName(resultSet
-							.getString("building_name"));
-					addLandDetails.setSize(resultSet.getInt("land_size"));
-					addLandDetails.setTransactionType(resultSet
-							.getString("transaction_type"));
-					addLandDetails.setPurchaseType(resultSet
-							.getString("purchasetype"));
-					addLandDetails.setDescription(resultSet
-							.getString("description"));
-					addLandDetails.setDiscount(resultSet.getInt("discount"));
-					landDetailsList.add(addLandDetails);
-				}
+			while (resultSet.next()) {
+				Land addLandDetails = new Land();
+				Users user = new Users();
+				user.setName(resultSet.getString("name"));
+				user.setEmail(resultSet.getString("email"));
+				user.setMobilenumber(resultSet.getLong("phonenumber"));
+				addLandDetails.setUser(user);
+				Property property = new Property();
+				property.setName(resultSet.getString("propertyname"));
+				addLandDetails.setProperty(property);
+				Location location = new Location();
+				City city = new City();
+				city.setName(resultSet.getString("cityname"));
+				location.setCity(city);
+				location.setName(resultSet.getString("locationname"));
+				addLandDetails.setLocation(location);
+				addLandDetails.setBhk(resultSet.getInt("bhk"));
+				addLandDetails.setPrice(BigDecimal.valueOf(resultSet.getLong("price")));
+				addLandDetails.setBuildingName(resultSet
+						.getString("building_name"));
+				addLandDetails.setSize(resultSet.getInt("land_size"));
+				addLandDetails.setTransactionType(resultSet
+						.getString("transaction_type"));
+				addLandDetails.setPurchaseType(resultSet
+						.getString("purchasetype"));
+				addLandDetails.setDescription(resultSet
+						.getString("description"));
+				addLandDetails.setStatus(resultSet.getString("status"));
+				addLandDetails.setDiscount(resultSet.getInt("discount"));
+				landDetailsList.add(addLandDetails);
 			}
-
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-
 		return landDetailsList;
 	}
 
