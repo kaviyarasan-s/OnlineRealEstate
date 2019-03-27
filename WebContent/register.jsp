@@ -41,7 +41,7 @@ body{
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Username is required">
 						<span class="label-input100">Name</span> <input class="input100"
-							type="text" name="name" placeholder="Type your name" required>
+							type="text" name="name" id="name" placeholder="Type your name" required>
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<div class="wrap-input100 validate-input m-b-23"
@@ -93,7 +93,6 @@ body{
 		</div>
 	</div>
 </body>
-
 <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <script src="vendor/animsition/js/animsition.min.js"></script>
 <script src="vendor/bootstrap/js/popper.js"></script>

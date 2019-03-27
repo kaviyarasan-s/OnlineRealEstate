@@ -23,17 +23,20 @@ public class ServletRegister extends HttpServlet {
 	public ServletRegister() {
 		super();
 	}
+
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 	}
+
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String number = request.getParameter("phonenumber");
-		long mobilenumber=0;
-		if (!number.isEmpty() && number != null&& Validate.numberValidation(number)) {
+		long mobilenumber = 0;
+		if (number != null && !number.isEmpty()
+				&& Validate.numberValidation(number)) {
 			mobilenumber = Long.parseLong(number);
 		}
 		Users users = new Users();

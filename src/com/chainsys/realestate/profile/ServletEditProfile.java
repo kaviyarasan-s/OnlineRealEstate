@@ -26,15 +26,20 @@ public class ServletEditProfile extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String button = request.getParameter("button");
-		request.setAttribute(button, true);
-		Profile profile=new ProfileImpl();
-		HttpSession httpSession=request.getSession();
-		String email=httpSession.getAttribute("email").toString();
-		Users user=new Users();
+		if (button.equals("cancel")) {
+			request.setAttribute(button, false);
+		} else {
+			request.setAttribute(button, true);
+		}
+		Profile profile = new ProfileImpl();
+		HttpSession httpSession = request.getSession();
+		String email = httpSession.getAttribute("email").toString();
+		Users user = new Users();
 		user.setEmail(email);
-		Users userDetails=profile.getUserDetailsByEmail(user);
+		Users userDetails = profile.getUserDetailsByEmail(user);
 		request.setAttribute("USERDETAILS", userDetails);
-		RequestDispatcher requestDispatcher=request.getRequestDispatcher("profile.jsp");
+		RequestDispatcher requestDispatcher = request
+				.getRequestDispatcher("profile.jsp");
 		requestDispatcher.forward(request, response);
 
 	}
@@ -55,16 +60,16 @@ public class ServletEditProfile extends HttpServlet {
 		}
 		if (request.getParameter("button").equals("editphonenumber")) {
 			String number = request.getParameter("phonenumber");
-			if (!number.isEmpty() && number != null) {
+			if (number != null && !number.isEmpty()) {
 				user.setMobilenumber(Long.parseLong(number));
 			}
-		}		
+		}
 		Profile profile = new ProfileImpl();
 		HttpSession httpSession = request.getSession();
 		String email = httpSession.getAttribute("email").toString();
 		user.setEmail(email);
-				boolean success = profile.editProfile(user);
-		Users userDetails=profile.getUserDetailsByEmail(user);
+		boolean success = profile.editProfile(user);
+		Users userDetails = profile.getUserDetailsByEmail(user);
 		request.setAttribute("USERDETAILS", userDetails);
 		if (success) {
 			request.setAttribute("MESSAGE", Constant.updateSuccessMessage);
