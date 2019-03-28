@@ -1,4 +1,5 @@
-	<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD H
@@ -39,18 +40,19 @@ TML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Username is required">
 						<span class="label-input100">Username</span> <input
-							class="input100" type="email" name="email"
+							class="input100" type="email" name="email" id="email"
 							placeholder="Type your email"> <span
 							class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
-
+					<span id="emailchkerr" style="color: red"></span>
 					<div class="wrap-input100 validate-input"
 						data-validate="Password is required">
 						<span class="label-input100">Password</span> <input
-							class="input100" type="password" name="password"
+							class="input100" type="password" name="password" id="password"
 							placeholder="Type your password"> <span
 							class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
+					<span id="passwordchkerr" style="color: red"></span>
 					<div class="text-right p-t-8 p-b-31">
 						<a href="forgotpassword.jsp"> Forgot password? </a>
 					</div>
@@ -65,12 +67,11 @@ TML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 							href="register.jsp" class="txt2"> Sign Up </a>
 					</div>
 					<div class="flex-col-c p-t-10">
-						<span class="txt1"> 
-						<%
- 						if (request.getAttribute("MESSAGE") != null) {
- 									out.print(request.getAttribute("MESSAGE"));
- 								}
-								 %>
+						<span class="txt1"> <%
+ 	if (request.getAttribute("MESSAGE") != null) {
+ 		out.print(request.getAttribute("MESSAGE"));
+ 	}
+ %>
 						</span>
 					</div>
 				</form>
@@ -87,6 +88,7 @@ TML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 	<script src="vendor/daterangepicker/daterangepicker.js"></script>
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 	<script src="js/main.js"></script>
+	<script src="javascript/users.js"></script>
 </body>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="javascript/bootstrap.min.js"></script>

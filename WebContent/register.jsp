@@ -25,8 +25,8 @@
 <link rel="stylesheet" type="text/css" href="css/util.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <style>
-body{
-	overflow-x: hidden; 
+body {
+	overflow-x: hidden;
 }
 </style>
 </head>
@@ -41,30 +41,36 @@ body{
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Username is required">
 						<span class="label-input100">Name</span> <input class="input100"
-							type="text" name="name" id="name" placeholder="Type your name" required>
-						<span class="focus-input100" data-symbol="&#xf206;"></span>
+							type="text" name="name" id="name" placeholder="Type your name"
+							required> <span class="focus-input100"
+							data-symbol="&#xf206;"></span>
 					</div>
+					<span id="namechkerr" style="color: red"></span>
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Email is required">
 						<span class="label-input100">Email</span> <input class="input100"
-							type="text" name="email" placeholder="Type your email" required>
-						<span class="focus-input100" data-symbol="&#9993;"></span>
+							type="email" name="email" id="email"
+							placeholder="Type your email" required> <span
+							class="focus-input100" data-symbol="&#9993;"></span>
 					</div>
-
+					<span id="emailchkerr" style="color: red"></span>
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Password is required">
 						<span class="label-input100">Password</span> <input
-							class="input100" type="password" name="password"
-							placeholder="Type your password" required> <span
+							class="input100" type="password" id="password" name="password"
+							placeholder="Type your password" maxlength="8" required> <span
 							class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
+					<span id="passwordchkerr" style="color: red"></span>
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Mobilenumber is required">
-						<span class="label-input100">Mobile number</span> <input
-							class="input100" type="text" name="phonenumber"
-							placeholder="Type your phonenumber" required> <span
-							class="focus-input100" data-symbol="&#xf2b6;"></span>
+						<span class="label-input100">Mobile number</span> 
+						<input	class="input100" type="tel" id="phonenumber"
+							name="phonenumber" placeholder="Type your phonenumber" pattern="[6-9]{1}[0-9]{9}" maxlength="10" required >
+						<span class="focus-input100" data-symbol="&#xf2b6;"></span>
+
 					</div>
+					<div id="phonenumberchkerr" style="color: red"></div>
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
@@ -101,8 +107,8 @@ body{
 <script src="vendor/daterangepicker/moment.min.js"></script>
 <script src="vendor/daterangepicker/daterangepicker.js"></script>
 <script src="vendor/countdowntime/countdowntime.js"></script>
-<script src="js/main.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="javascript/bootstrap.min.js"></script>
 <script src="javascript/jquery.min.js"></script>
+<script src="javascript/users.js"></script>
 </html>
