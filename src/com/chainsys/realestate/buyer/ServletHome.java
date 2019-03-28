@@ -30,6 +30,7 @@ public class ServletHome extends HttpServlet {
 		List<City> cityList=land.getAllCity();
 		request.setAttribute("email", httpSession.getAttribute("email"));	
 		request.setAttribute("PROPERTYINFO", propertyList);
+		request.setAttribute("ISBUYLAND", true);
 		request.setAttribute("CITY", cityList);
 		RequestDispatcher requestDispatcher = request
 				.getRequestDispatcher("home.jsp");

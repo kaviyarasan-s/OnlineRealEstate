@@ -44,14 +44,15 @@ public class ServletLogin extends HttpServlet {
 		if (isValid) {
 			boolean loginResult = login.checkLogin(users);
 			if (loginResult) {
-				ServiceLand land=new ServiceLandImpl();
-				HttpSession httpSession=request.getSession();
+				ServiceLand land = new ServiceLandImpl();
+				HttpSession httpSession = request.getSession();
 				httpSession.setAttribute("email", users.getEmail());
-				List<Property> propertyList=land.getAllProperty();
-				List<City> cityList=land.getAllCity();
-				request.setAttribute("email", users.getEmail());	
+				List<Property> propertyList = land.getAllProperty();
+				List<City> cityList = land.getAllCity();
+				request.setAttribute("email", users.getEmail());
 				request.setAttribute("PROPERTYINFO", propertyList);
 				request.setAttribute("CITY", cityList);
+				request.setAttribute("ISBUYLAND", true);
 				RequestDispatcher requestDispatcher = request
 						.getRequestDispatcher("home.jsp");
 				requestDispatcher.forward(request, response);

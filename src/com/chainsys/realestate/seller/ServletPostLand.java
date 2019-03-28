@@ -34,12 +34,16 @@ public class ServletPostLand extends HttpServlet {
 		ServiceLand serviceLand = new ServiceLandImpl();
 		List<City> cityDetails = serviceLand.getAllCity();
 		List<Property> propertyTypes = serviceLand.getAllProperty();
+		HttpSession httpSession=request.getSession(false);
 		String value = request.getParameter("city");
 		if (value == null) {
 			request.setAttribute("PROPERTYINFO", propertyTypes);
 			request.setAttribute("CITY", cityDetails);
+			request.setAttribute("ISPOSTLAND", true);
+			request.setAttribute("email",httpSession.getAttribute("email"));
 			RequestDispatcher rd1 = request
 					.getRequestDispatcher("LandDetail.jsp");
+			rd1=request.getRequestDispatcher("home.jsp");
 			rd1.forward(request, response);
 		} else {
 			StringBuilder stringBuilder = new StringBuilder();

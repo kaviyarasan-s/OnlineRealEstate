@@ -89,6 +89,14 @@ input[type="email"],input[type="password"] {
 	outline: none;
 }
 
+input[type="text"] {
+	border: none;
+	outline: none;
+}
+input[type="tel"] {
+	border: none;
+	outline: none;
+}
 textarea {
   
 }

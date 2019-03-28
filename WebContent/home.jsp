@@ -27,49 +27,44 @@
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <link rel="stylesheet" type="text/css" href="css/simple-sidebar.css">
 <style type="text/css">
-/* .Box {
-	display: flex;
-	align-items: stretch;
-} */
 .columnalign {
--webkit-columns: 100px 3; /* Chrome, Safari, Opera */
-  -moz-columns: 100px 3; /* Firefox */
-  columns: 100px 3;
-}
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
+	-webkit-columns: 100px 3; /* Chrome, Safari, Opera */
+	-moz-columns: 100px 3; /* Firefox */
+	columns: 100px 3;
 }
 
+.column {
+	float: left;
+	width: 50%;
+	padding: 10px;
+	height: 300px; /* Should be removed. Only for demonstration */
+}
 /* Clear floats after the columns */
 .row:after {
-  content: "";
-  display: table;
-  clear: both;
+	content: "";
+	display: table;
+	clear: both;
 }
 </style>
 </head>
-<body>
+<body>	
 	<div class="d-flex" id="wrapper">
-
 		<!-- Sidebar -->
 		<div class="bg-light border-right" id="sidebar-wrapper">
 			<div class="sidebar-heading">Menu</div>
 			<div class="list-group list-group-flush">
-				<a href="profile.jsp" class="list-group-item list-group-item-action bg-light">Profile</a>
-				<a href="LandDetail.jsp" class="list-group-item list-group-item-action bg-light">Sale
+				<a href="ServletGetProfile"
+					class="list-group-item list-group-item-action bg-light">Profile</a>
+				<a href="ServletPostLand"
+					class="list-group-item list-group-item-action bg-light">Sale
 					land</a> <a href="ServletHome"
 					class="list-group-item list-group-item-action bg-light">Buy
 					land</a>
 			</div>
 		</div>
 		<!-- /#sidebar-wrapper -->
-
 		<!-- Page Content -->
 		<div id="page-content-wrapper">
-
 			<nav
 				class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
 			<button class="btn btn-primary" id="menu-toggle">
@@ -87,7 +82,6 @@
 				aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 					<li class="nav-item active">
@@ -103,20 +97,19 @@
 				</ul>
 			</div>
 			</nav>
-
-			<!-- <div class="container-fluid">
-        <h1 class="mt-4">Simple Sidebar</h1>
-        <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
-      </div>
- -->
+			<div>
+				<c:if test="${USERDETAILS!=null}">
+					<%@ include file="profile.jsp" %>
+				</c:if>	
+				<c:if test="${ISPOSTLAND}">
+					<%@ include file="LandDetail.jsp" %>
+				</c:if>
+			</div>
+			<c:if test="${ISBUYLAND}">
 			<form method="post" action="ServletFilterLand">
 				<div class="row">
-				<div class="column">
-				<div class="columnalign">
-				 <!-- <div class="col-md-12">
-					<div class="col-md-2">  -->
-						<!-- <div class="Box"> -->
+					<div class="column">
+						<div class="columnalign">
 							<div class="col-md-12">
 								<div>Property Type</div>
 								<div>
@@ -132,8 +125,6 @@
 										</c:forEach>
 									</select>
 								</div>
-							<!-- </div> -->
-							<!-- <div class="col-md-2"> -->
 								<div>City</div>
 								<div>
 									<select name="city" id="city" required>
@@ -148,8 +139,6 @@
 										</c:forEach>
 									</select>
 								</div>
-							<!-- </div>
-							<div class="col-md-12"> -->
 								<div>Purchase Type</div>
 								<div>
 									<select name="purchasetype" required>
@@ -173,8 +162,7 @@
 									</select>
 								</div>
 							</div>
-							</div>
-						<!-- </div> -->
+						</div>
 						<div class="col-md-12" style="margin-top: 2%">
 							<button class="btn btn-info">Search</button>
 						</div>
@@ -210,12 +198,11 @@
 								</div>
 							</c:if>
 						</div>
-						<!-- </div> -->
 					</div>
-					<br/>
+					<br />
 					<div class="column">
-					<div class="col-md-8">
-						<div>Filter type</div>
+						<div class="col-md-8">
+							<div>Filter type</div>
 							<div class="col-md-12">
 								<div>BHK</div>
 								<div>
@@ -234,7 +221,6 @@
 											<option value="3">3 BHK</option>
 											<option value="4">4 BHK</option>
 										</c:if>
-
 										<c:if test="${bhk==3}">
 											<option value="0">---Choose---</option>
 											<option value="1">1 BHK</option>
@@ -242,7 +228,6 @@
 											<option value="3" selected>3 BHK</option>
 											<option value="4">4 BHK</option>
 										</c:if>
-
 										<c:if test="${bhk==4}">
 											<option value="0">---Choose---</option>
 											<option value="1">1 BHK</option>
@@ -301,25 +286,22 @@
 									</c:if>
 								</div>
 							</div>
-						<div class="col-md-12" style="margin-top: 2%">
-							<button class="btn btn-info">Filter</button>
-						</div>
+							<div class="col-md-12" style="margin-top: 2%">
+								<button class="btn btn-info">Filter</button>
+							</div>
 
+						</div>
 					</div>
 				</div>
-				</div>
-				<!-- </div> -->
 			</form>
-
+			</c:if>
 			<!-- /#page-content-wrapper -->
 		</div>
 	</div>
 	<!-- /#wrapper -->
-
 	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 	<!-- Menu Toggle Script -->
 	<script>
 		$("#menu-toggle").click(function(e) {

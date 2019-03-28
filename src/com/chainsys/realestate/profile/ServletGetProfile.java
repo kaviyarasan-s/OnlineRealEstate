@@ -21,13 +21,15 @@ public class ServletGetProfile extends HttpServlet {
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Profile profile=new ProfileImpl();
-		HttpSession httpSession=request.getSession();
+		HttpSession httpSession=request.getSession(false);
 		String email=httpSession.getAttribute("email").toString();
 		Users user=new Users();
 		user.setEmail(email);
 		Users userDetails=profile.getUserDetailsByEmail(user);
+		request.setAttribute("email",httpSession.getAttribute("email"));
 		request.setAttribute("USERDETAILS", userDetails);
 		RequestDispatcher requestDispatcher=request.getRequestDispatcher("profile.jsp");
+		requestDispatcher=request.getRequestDispatcher("home.jsp");
 		requestDispatcher.forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
