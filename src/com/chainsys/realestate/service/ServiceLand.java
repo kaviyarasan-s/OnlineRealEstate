@@ -9,7 +9,7 @@ import com.chainsys.realestate.model.Property;
 
 public interface ServiceLand {
 
-	boolean validateLandInfo();
+	boolean validateLandInfo(Land land);
 	boolean addLandInfo(Land land);
 	boolean editLandInfo(Land land);
 	City getCityDetails(City city);

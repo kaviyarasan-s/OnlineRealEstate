@@ -23,28 +23,30 @@ import com.chainsys.realestate.service.Profile;
 import com.chainsys.realestate.service.ServiceLand;
 import com.chainsys.realestate.service.impl.ProfileImpl;
 import com.chainsys.realestate.service.impl.ServiceLandImpl;
+
 @WebServlet("/ServletPostLand")
 public class ServletPostLand extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	public ServletPostLand() {
 		super();
 	}
+
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		ServiceLand serviceLand = new ServiceLandImpl();
 		List<City> cityDetails = serviceLand.getAllCity();
 		List<Property> propertyTypes = serviceLand.getAllProperty();
-		HttpSession httpSession=request.getSession(false);
+		HttpSession httpSession = request.getSession(false);
 		String value = request.getParameter("city");
 		if (value == null) {
 			request.setAttribute("PROPERTYINFO", propertyTypes);
-			request.setAttribute("CITY", cityDetails);
+			request.setAttribute("CITY", cityDetails);			
+			RequestDispatcher requestDispatcher=request.getRequestDispatcher("LandDetail.jsp");
 			request.setAttribute("ISPOSTLAND", true);
-			request.setAttribute("email",httpSession.getAttribute("email"));
-			RequestDispatcher rd1 = request
-					.getRequestDispatcher("LandDetail.jsp");
-			rd1=request.getRequestDispatcher("home.jsp");
-			rd1.forward(request, response);
+			request.setAttribute("email", httpSession.getAttribute("email"));
+			requestDispatcher=request.getRequestDispatcher("home.jsp");
+			requestDispatcher.forward(request, response);
 		} else {
 			StringBuilder stringBuilder = new StringBuilder();
 			int cityId = Integer.parseInt(request.getParameter("city"));
@@ -65,33 +67,62 @@ public class ServletPostLand extends HttpServlet {
 			response.getWriter().write(stringBuilder.toString());
 		}
 	}
+
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int propertyId = Integer.parseInt(request.getParameter("propertytype"));
-		int cityId = Integer.parseInt(request.getParameter("city"));
-		int locationId = Integer.parseInt(request.getParameter("locality"));
-		double price = Double.parseDouble(request.getParameter("price"));
-		int bhk = Integer.parseInt(request.getParameter("bhk"));
+		String propertyType = request.getParameter("propertytype");
+		int propertyId = 0;
+		if (propertyType != null && !propertyType.isEmpty()) {
+			propertyId = Integer.parseInt(propertyType);
+		}
+		String cityName = request.getParameter("city");
+		int cityId = 0;
+		if (cityName != null && !cityName.isEmpty()) {
+			cityId = Integer.parseInt(cityName);
+		}
+		String locationName = request.getParameter("locality");
+		int locationId = 0;
+		if (locationName  != null && !locationName .isEmpty()) {
+			locationId = Integer.parseInt(locationName );
+		}
+		String landPrice = request.getParameter("price");
+		double price = 0;
+		if (landPrice != null && !landPrice.isEmpty()) {
+			price = Double.parseDouble(landPrice);
+		}
+		String landBHK = request.getParameter("bhk");
+		int bhk = 0;
+		if (landBHK != null && !landBHK.isEmpty()) {
+			bhk = Integer.parseInt(landBHK);
+		}
 		String buildingName = request.getParameter("buildingname");
-		int size = Integer.parseInt(request.getParameter("landsize"));
+		String landSize = request.getParameter("landsize");
+		int size = 0;
+		if (landSize != null && !landSize.isEmpty()) {
+			size = Integer.parseInt(landSize);
+		}
 		String transactionType = request.getParameter("transactiontype");
 		String purchaseType = request.getParameter("purchasetype");
-		int discount = Integer.parseInt(request.getParameter("discount"));
+		String landDiscount = request.getParameter("discount");
+		int discount = 0;
+		if (landDiscount != null && !landDiscount.isEmpty()) {
+			discount = Integer.parseInt(landDiscount);
+		}
 		String description = request.getParameter("description");
 		String status = request.getParameter("status");
 		ServiceLand serviceLand = new ServiceLandImpl();
 		Land land = new Land();
-		HttpSession httpSession=request.getSession(); 
-		Users users= new Users();
+		HttpSession httpSession = request.getSession();
+		Users users = new Users();
 		users.setEmail(httpSession.getAttribute("email").toString());
-//		users.setId(5);
-//		users.setName("kavi");
-//		users.setEmail("kavi@gmail.com");
-//		users.setPassword("12345");
-//		users.setMobilenumber(1231231231);
-		Profile profile=new ProfileImpl();
-		Users userDetails =profile.getUserDetailsByEmail(users);
-		land.setUser(userDetails );
+		// users.setId(5);
+		// users.setName("kavi");
+		// users.setEmail("kavi@gmail.com");
+		// users.setPassword("12345");
+		// users.setMobilenumber(1231231231);
+		Profile profile = new ProfileImpl();
+		Users userDetails = profile.getUserDetailsByEmail(users);
+		land.setUser(userDetails);
 		Property property = new Property();
 		property.setId(propertyId);
 		property = serviceLand.getPropertyDetails(property);
@@ -115,16 +146,23 @@ public class ServletPostLand extends HttpServlet {
 		land.setDescription(description);
 		land.setCreatedDate(LocalDateTime.now());
 		land.setCreatedBy((long) 5);
-		boolean postLandResult=serviceLand.addLandInfo(land);
-		if(postLandResult)
-		{
-			request.setAttribute("MESSAGE",Constant.postLandSuccessMessage);
+		boolean postLandResult = serviceLand.addLandInfo(land);
+		if (postLandResult) {
+			request.setAttribute("MESSAGE", Constant.postLandSuccessMessage);
+		} else {
+			request.setAttribute("MESSAGE", Constant.postLandFailureMessage);
 		}
-		else
-		{
-			request.setAttribute("MESSAGE",Constant.postLandFailureMessage);
-		}
-		RequestDispatcher requestDispatcher=request.getRequestDispatcher("LandDetail.jsp");
+//		doGet(request, response);
+		List<City> cityDetails = serviceLand.getAllCity();
+		List<Property> propertyTypes = serviceLand.getAllProperty();
+		request.setAttribute("PROPERTYINFO", propertyTypes);
+		request.setAttribute("CITY", cityDetails);
+		RequestDispatcher requestDispatcher = request
+				.getRequestDispatcher("LandDetail.jsp");
+		request.setAttribute("ISPOSTLAND", true);
+		request.setAttribute("email", httpSession.getAttribute("email").toString());
+		requestDispatcher = request
+				.getRequestDispatcher("home.jsp");
 		requestDispatcher.forward(request, response);
 	}
 

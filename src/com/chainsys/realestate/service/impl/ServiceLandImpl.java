@@ -14,15 +14,15 @@ import com.chainsys.realestate.validate.LandInfoValidation;
 public class ServiceLandImpl implements ServiceLand {
 
 	@Override
-	public boolean validateLandInfo() {
+	public boolean validateLandInfo(Land land) {
 
-		return LandInfoValidation.landValidation();
+		return LandInfoValidation.landValidation(land);
 	}
 
 	@Override
 	public boolean addLandInfo(Land land) {
 		boolean success = false;
-		if (validateLandInfo()) {
+		if (validateLandInfo(land)) {
 			LandDAO landDAO = new LandDAOImpl();
 			success = landDAO.addLand(land);
 
@@ -35,7 +35,7 @@ public class ServiceLandImpl implements ServiceLand {
 	public boolean editLandInfo(Land land) {
 		boolean success = false;
 		
-		if (validateLandInfo()) {
+		if (validateLandInfo(land)) {
 			LandDAO landDAO = new LandDAOImpl();
 			success = landDAO.editLand(land);
 		}

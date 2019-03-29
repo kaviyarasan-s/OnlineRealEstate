@@ -76,7 +76,6 @@ public class ServletFilterLand extends HttpServlet {
 		{
 			land.setBhk(0);
 		}
-		System.out.println(transactionType);
 		if (transactionType != null && !transactionType.isEmpty()) {
 			land.setTransactionType(transactionType);
 		}
@@ -102,6 +101,7 @@ public class ServletFilterLand extends HttpServlet {
 		request.setAttribute("bhk", bhk);
 		request.setAttribute("price", priceAmount);
 		request.setAttribute("trntype", transactionType);
+		request.setAttribute("ISBUYLAND", true);
 		request.setAttribute("purchase", purchaseType);
 		request.setAttribute("PROPERTYINFO", propertyList);
 		request.setAttribute("CITY", cityList);

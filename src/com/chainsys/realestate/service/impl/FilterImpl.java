@@ -20,7 +20,6 @@ public class FilterImpl implements Filter {
 					&& land.getLocation().getCity().getId() > 0
 					&& land.getPurchaseType() != null
 					&& !land.getPurchaseType().isEmpty()) {
-				System.out.println(land.getBhk()+" "+land.getPrice()+" "+land.getTransactionType());
 				if (land.getBhk() > 0 && land.getPrice() != null
 						&& land.getPrice() != BigDecimal.ZERO
 						&& !"".equals(land.getTransactionType())

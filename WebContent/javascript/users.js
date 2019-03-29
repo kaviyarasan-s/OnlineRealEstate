@@ -26,11 +26,12 @@ $(document)
 													"*Email is required");
 										} else if (email != null && email != '') {
 											if (email
-													.match("^([a-zA-Z0-9]+)@([a-zA-Z]+).([a-z]{2,3})$")) {
+													.match("^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")) {
 												$("#emailchkerr").text('');
 											} else {
-												$("#emailchkerr").text(
-														'*Enter valid email id');
+												$("#emailchkerr")
+														.text(
+																'*Enter valid email id');
 											}
 
 										}
@@ -46,7 +47,8 @@ $(document)
 													"*Password is required");
 										} else if (password != null
 												&& password != '') {
-											if (password.match("^([a-zA-Z0-9$@]+)$")) {
+											if (password
+													.match("^([a-zA-Z0-9$@]+)$")) {
 												$("#passwordchkerr").text('');
 											} else {
 												$("#passwordchkerr")
@@ -65,7 +67,11 @@ $(document)
 											"*Mobilenumber is required");
 								} else if (phonenumber != null
 										&& phonenumber != '') {
-									$("#phonenumberchkerr").text('');
+									if (phonenumber.match("^([0-9]+)$")) {
+										$("#phonenumberchkerr").text('');
+									} else {
+										$("#phonenumberchkerr").text('Enter valid number');
+									}
 								}
 
 							});
