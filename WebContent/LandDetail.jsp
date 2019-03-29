@@ -75,7 +75,7 @@
 				<td>Building Name</td>
 				<td><input type="text" name="buildingname"
 					style="outline: 1px solid #808080c9;" id="buildingname"
-					onkeypress="return ((event.keyCode>64&&event.keyCode<91)||(event.keyCode>96&&event.keyCode<123))"></td>
+					onkeypress="return ((event.keyCode>64&&event.keyCode<91)||(event.keyCode==32)||(event.keyCode>96&&event.keyCode<123))"></td>
 				<td><div id="buildingnamechkerr" style="color: red"></div></td>
 			</tr>
 			<tr>

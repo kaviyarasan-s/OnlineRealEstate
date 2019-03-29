@@ -26,7 +26,7 @@ $(document).ready(function() {
 	$('#buildingname').blur(function() {
 		var buildingname = $('#buildingname').val();
 		if (buildingname != null && buildingname != '') {
-			if (buildingname.match("^([a-zA-Z\s]+)$")) {
+			if (buildingname.match("^([a-zA-Z\\s]*)$")) {
 				$('#buildingnamechkerr').text('');
 			} else {
 				$('#buildingnamechkerr').text('*Enter valid building name');
