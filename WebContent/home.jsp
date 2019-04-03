@@ -45,6 +45,13 @@
 	display: table;
 	clear: both;
 }
+
+div.landinfo {
+                padding:10%; 
+                height: 450px; 
+                overflow-x: auto; 
+                text-align:justify; 
+}
 </style>
 </head>
 <body>
@@ -98,18 +105,18 @@
 			</div>
 			</nav>
 			<div>
-				<c:if test="${USERDETAILS!=null}">
+				<c:if test="${ISPROFILE}">
 					<%@ include file="profile.jsp"%>
 				</c:if>
 				<c:if test="${ISPOSTLAND}">
 					<%@ include file="LandDetail.jsp"%>
 				</c:if>
-				
+
 			</div>
 			<c:if test="${ISBUYLAND}">
 				<form method="post" action="ServletFilterLand">
 					<div class="row">
-						<div class="column">
+						<div class="col-md-9">
 							<div class="columnalign">
 								<div class="col-md-12">
 									<div>Property Type</div>
@@ -173,29 +180,33 @@
 							<div class="col-md-12" style="margin-top: 2%">
 								<button class="btn btn-info">Search</button>
 							</div>
-							<div class="col-md-12" style="margin-top: 2%">
+							<div class="row landinfo" style="margin-top: 2%">
+
 								<c:if test="${LANDDETAILS!=null}">
 									<c:forEach var="landdetails" items="${LANDDETAILS}">
-										<div class="col-md-6">
-											<div>Building name:${landdetails.buildingName}</div>
-											<div>Location name: ${landdetails.location.name}</div>
-											<div>City name: ${landdetails.location.city.name}</div>
-											<div>Land size: ${landdetails.size}</div>
-											<div>BHK: ${landdetails.bhk}</div>
-											<div>Status: ${landdetails.status}</div>
-										</div>
-										<div class="col-md-6">
-											<div>Description: ${landdetails.description}</div>
-											<div>Price: ${landdetails.price}</div>
-											<div>Transaction type: ${landdetails.transactionType}</div>
-											<div>Purchase type: ${landdetails.purchaseType}</div>
-											<div>Discount: ${landdetails.discount}</div>
-											<div>
-												Owner contact details:
-												<div>Owner name:${landdetails.user.name}</div>
-												Email:${landdetails.user.email}
+										<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54"
+											style="margin-bottom: 2%; background-color: skyblue">
+											<div class="column">
+												<div>Building name:${landdetails.buildingName}</div>
+												<div>Location name: ${landdetails.location.name}</div>
+												<div>City name: ${landdetails.location.city.name}</div>
+												<div>Land size: ${landdetails.size}</div>
+												<div>BHK: ${landdetails.bhk}</div>
+												<div>Status: ${landdetails.status}</div>
 											</div>
-											<div>Mobile number:${landdetails.user.mobilenumber}</div>
+											<div class="column">
+												<div>Description: ${landdetails.description}</div>
+												<div>Price: ${landdetails.price}</div>
+												<div>Transaction type: ${landdetails.transactionType}</div>
+												<div>Purchase type: ${landdetails.purchaseType}</div>
+												<div>Discount: ${landdetails.discount}</div>
+												<div>
+													Owner contact details:
+													<div>Owner name:${landdetails.user.name}</div>
+													Email:${landdetails.user.email}
+												</div>
+												<div>Mobile number:${landdetails.user.mobilenumber}</div>
+											</div>
 										</div>
 									</c:forEach>
 								</c:if>
@@ -204,13 +215,14 @@
 										<h5>No results found.</h5>
 									</div>
 								</c:if>
+
 							</div>
 						</div>
 						<br />
-						<div class="column">
-							<div class="col-md-8">
+						<div class="col-md-3">
+							<div>
 								<div>Filter type</div>
-								<div class="col-md-12">
+								<div>
 									<div>BHK</div>
 									<div>
 										<select name="bhk">
@@ -252,7 +264,7 @@
 										</select>
 									</div>
 								</div>
-								<div class="col-md-12">
+								<div>
 									<div>Price</div>
 									<div>
 										<c:if test="${price!=null&&price!=0 }">
@@ -264,10 +276,10 @@
 												style="width: 50%" id="landprice">
 										</c:if>
 									</div>
-									<div id="pricechkerr" style="color:red"></div>
+									<div id="pricechkerr" style="color: red"></div>
 								</div>
-								
-								<div class="col-md-12">
+
+								<div>
 									<div>Transaction Type</div>
 									<div>
 										<c:if test="${trntype==null||trntype==''}">
@@ -295,7 +307,7 @@
 										</c:if>
 									</div>
 								</div>
-								<div class="col-md-12" style="margin-top: 2%">
+								<div style="margin-top: 2%">
 									<button class="btn btn-info">Filter</button>
 								</div>
 

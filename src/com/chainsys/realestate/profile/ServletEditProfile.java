@@ -26,22 +26,24 @@ public class ServletEditProfile extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String button = request.getParameter("button");
-		if (button.equals("cancel")) {
-			request.setAttribute(button, false);
-		} else {
-			request.setAttribute(button, true);
-		}
 		Profile profile = new ProfileImpl();
 		HttpSession httpSession = request.getSession();
 		String email = httpSession.getAttribute("email").toString();
 		Users user = new Users();
 		user.setEmail(email);
 		Users userDetails = profile.getUserDetailsByEmail(user);
+		// if (button.equals("cancel")) {
+		// request.setAttribute(button, false);
+		// } else {
+		request.setAttribute(button, true);
+		// }
 		request.setAttribute("USERDETAILS", userDetails);
 		RequestDispatcher requestDispatcher = request
 				.getRequestDispatcher("profile.jsp");
+		request.setAttribute("ISPROFILE", true);
+		request.setAttribute("email", email);
+		requestDispatcher = request.getRequestDispatcher("home.jsp");
 		requestDispatcher.forward(request, response);
-
 	}
 
 	protected void doPost(HttpServletRequest request,
@@ -73,15 +75,17 @@ public class ServletEditProfile extends HttpServlet {
 		request.setAttribute("USERDETAILS", userDetails);
 		if (success) {
 			request.setAttribute("MESSAGE", Constant.updateSuccessMessage);
-			RequestDispatcher requestDispatcher = request
-					.getRequestDispatcher("profile.jsp");
-			requestDispatcher.forward(request, response);
+
 		} else {
 			request.setAttribute("MESSAGE", Constant.updateFailureMessage);
-			RequestDispatcher requestDispatcher = request
-					.getRequestDispatcher("profile.jsp");
-			requestDispatcher.forward(request, response);
+
 		}
+		RequestDispatcher requestDispatcher = request
+				.getRequestDispatcher("profile.jsp");
+		request.setAttribute("email", email);
+		request.setAttribute("ISPROFILE", true);
+		requestDispatcher = request.getRequestDispatcher("home.jsp");
+		requestDispatcher.forward(request, response);
 	}
 
 }

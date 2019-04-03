@@ -115,11 +115,6 @@ public class ServletPostLand extends HttpServlet {
 		HttpSession httpSession = request.getSession();
 		Users users = new Users();
 		users.setEmail(httpSession.getAttribute("email").toString());
-		// users.setId(5);
-		// users.setName("kavi");
-		// users.setEmail("kavi@gmail.com");
-		// users.setPassword("12345");
-		// users.setMobilenumber(1231231231);
 		Profile profile = new ProfileImpl();
 		Users userDetails = profile.getUserDetailsByEmail(users);
 		land.setUser(userDetails);
@@ -145,14 +140,13 @@ public class ServletPostLand extends HttpServlet {
 		land.setStatus(status);
 		land.setDescription(description);
 		land.setCreatedDate(LocalDateTime.now());
-		land.setCreatedBy((long) 5);
+		land.setCreatedBy(userDetails.getId());
 		boolean postLandResult = serviceLand.addLandInfo(land);
 		if (postLandResult) {
 			request.setAttribute("MESSAGE", Constant.postLandSuccessMessage);
 		} else {
 			request.setAttribute("MESSAGE", Constant.postLandFailureMessage);
 		}
-//		doGet(request, response);
 		List<City> cityDetails = serviceLand.getAllCity();
 		List<Property> propertyTypes = serviceLand.getAllProperty();
 		request.setAttribute("PROPERTYINFO", propertyTypes);

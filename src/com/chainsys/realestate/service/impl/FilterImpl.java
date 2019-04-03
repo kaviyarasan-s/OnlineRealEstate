@@ -9,12 +9,12 @@ import com.chainsys.realestate.model.Land;
 import com.chainsys.realestate.service.Filter;
 
 public class FilterImpl implements Filter {
-
+	FilterDAO filterDAO = new FilterDAOImpl();
 	@Override
 	public List<Land> filterLandsDetails(Land land) {
 
 		List<Land> landDetails = null;
-		FilterDAO filterDAO = new FilterDAOImpl();
+		
 		if (validateFilterDetails()) {
 			if (land.getProperty().getId() > 0
 					&& land.getLocation().getCity().getId() > 0

@@ -10,6 +10,7 @@ import com.chainsys.realestate.validate.ProfileValidation;
 import com.chainsys.realestate.validate.Validate;
 
 public class ProfileImpl implements Profile {
+	UserDAO userDAO = new UserDAOImpl();
 	/*
 	 * Register user details
 	 * 
@@ -20,7 +21,7 @@ public class ProfileImpl implements Profile {
 	@Override
 	public boolean userRegistration(Users user) {
 		boolean registerResult = false;
-		UserDAO userDAO = new UserDAOImpl();
+		
 		registerResult = userDAO.addUserDetails(user);
 		return registerResult;
 	}
@@ -46,7 +47,6 @@ public class ProfileImpl implements Profile {
 	@Override
 	public boolean changePassword(Users user) {
 		boolean success = false;
-		UserDAO userDAO = new UserDAOImpl();
 		Users updatedUserDetails = userDAO.getUserDetailsByEmail(user);
 		if (updatedUserDetails != null) {
 			updatedUserDetails.setPassword(user.getPassword());
@@ -65,7 +65,6 @@ public class ProfileImpl implements Profile {
 	@Override
 	public boolean checkForgotPasswordEmail(Users user) {
 		boolean valid = false;
-		UserDAO userDAO = new UserDAOImpl();
 		Users updatedUserDetails = userDAO.getUserDetailsByEmail(user);
 		if (updatedUserDetails == null) {
 			valid = false;
@@ -85,7 +84,6 @@ public class ProfileImpl implements Profile {
 	@Override
 	public boolean editProfile(Users user) {
 		boolean success = false;
-		UserDAO userDAO = new UserDAOImpl();
 		Users updatedUserDetails = userDAO.getUserDetailsByEmail(user);
 		if (user.getName() != null && !user.getName().isEmpty()) {
 			updatedUserDetails.setName(user.getName());
@@ -107,7 +105,6 @@ public class ProfileImpl implements Profile {
 
 	@Override
 	public Users getUserDetailsByEmail(Users user) {
-		UserDAO userDAO = new UserDAOImpl();
 		Users userDetails = null;
 		if (Validate.emailValidate(user.getEmail())) {
 			userDetails = userDAO.getUserDetailsByEmail(user);

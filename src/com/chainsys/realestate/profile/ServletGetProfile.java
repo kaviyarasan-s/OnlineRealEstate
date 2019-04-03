@@ -30,6 +30,7 @@ public class ServletGetProfile extends HttpServlet {
 		request.setAttribute("USERDETAILS", userDetails);
 		RequestDispatcher requestDispatcher=request.getRequestDispatcher("profile.jsp");
 		requestDispatcher=request.getRequestDispatcher("home.jsp");
+		request.setAttribute("ISPROFILE", true);
 		requestDispatcher.forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -34,8 +34,6 @@ public class LandDAOImpl implements LandDAO {
 			success = true;
 		}
 		session.getTransaction().commit();
-		session.close();
-		sessionFactory.close();
 		return success;
 	}
 
@@ -46,8 +44,6 @@ public class LandDAOImpl implements LandDAO {
 		session.beginTransaction();
 		session.saveOrUpdate(land);
 		session.getTransaction().commit();
-		session.close();
-		sessionFactory.close();
 		return success;
 	}
 

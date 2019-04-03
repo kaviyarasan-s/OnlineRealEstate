@@ -11,6 +11,7 @@ import com.chainsys.realestate.validate.LoginValidate;
  *
  */
 public class LoginImpl implements Login {
+	
 	/*
 	 * Validate login details
 	 * 

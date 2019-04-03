@@ -12,7 +12,7 @@ import com.chainsys.realestate.service.ServiceLand;
 import com.chainsys.realestate.validate.LandInfoValidation;
 
 public class ServiceLandImpl implements ServiceLand {
-
+	LandDAO landDAO=new LandDAOImpl();
 	@Override
 	public boolean validateLandInfo(Land land) {
 
@@ -23,7 +23,6 @@ public class ServiceLandImpl implements ServiceLand {
 	public boolean addLandInfo(Land land) {
 		boolean success = false;
 		if (validateLandInfo(land)) {
-			LandDAO landDAO = new LandDAOImpl();
 			success = landDAO.addLand(land);
 
 		}
@@ -36,7 +35,6 @@ public class ServiceLandImpl implements ServiceLand {
 		boolean success = false;
 		
 		if (validateLandInfo(land)) {
-			LandDAO landDAO = new LandDAOImpl();
 			success = landDAO.editLand(land);
 		}
 		return success;
@@ -47,7 +45,6 @@ public class ServiceLandImpl implements ServiceLand {
 		City cityDetails=null;
 		if(city.getId()>0)
 		{
-			LandDAO landDAO=new LandDAOImpl();
 			cityDetails=landDAO.getCityById(city);
 		}
 		return cityDetails;
@@ -58,13 +55,11 @@ public class ServiceLandImpl implements ServiceLand {
 		Location locationDetails=null;
 		if(location.getId()>0)
 		{
-			LandDAO landDAO=new LandDAOImpl();
 			locationDetails=landDAO.getLocationByIdAndCityId(location);
 		}
 		return locationDetails;
 	}
 	public Location getLocationDetailsByName(Location location) {
-			LandDAO landDAO=new LandDAOImpl();
 			Location locationDetails=landDAO.getLocationIdByName(location);
 		
 		return locationDetails;
@@ -72,7 +67,6 @@ public class ServiceLandImpl implements ServiceLand {
 
 	public List<Location> getAllLocationDetailsByCityId(City city)
 	{
-		LandDAO landDAO=new LandDAOImpl();
 		List<Location> locationList=landDAO.getAllLocationByCityId(city);
 		return locationList;
 	}
@@ -81,7 +75,6 @@ public class ServiceLandImpl implements ServiceLand {
 		Property propertyDetails=null;
 		if(property.getId()>0)
 		{
-			LandDAO landDAO=new LandDAOImpl();
 			propertyDetails=landDAO.getPropertyById(property);
 		}
 		return propertyDetails;
@@ -89,14 +82,13 @@ public class ServiceLandImpl implements ServiceLand {
 
 	@Override
 	public List<City> getAllCity() {		
-		LandDAO landDAO=new LandDAOImpl();
+
 		List<City> cityList=landDAO.getAllCityDetails();
 		return cityList;
 	}
 
 	@Override
 	public List<Property> getAllProperty() {
-		LandDAO landDAO=new LandDAOImpl();
 		List<Property> propertyList=landDAO.getAllPropertyDetails();
 		return propertyList;
 	}

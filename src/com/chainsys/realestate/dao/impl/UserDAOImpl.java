@@ -65,7 +65,6 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Override
 	public boolean editProfileInfo(Users user) {
-		System.out.println(user);
 		session.saveOrUpdate(user);
 		commitTransaction();
 		return true;
