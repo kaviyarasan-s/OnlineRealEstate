@@ -16,6 +16,7 @@ import com.chainsys.realestate.model.City;
 import com.chainsys.realestate.model.Land;
 import com.chainsys.realestate.model.Location;
 import com.chainsys.realestate.model.Property;
+import com.chainsys.realestate.model.Users;
 import com.chainsys.realestate.service.Filter;
 import com.chainsys.realestate.service.ServiceLand;
 import com.chainsys.realestate.service.impl.FilterImpl;
@@ -63,39 +64,40 @@ public class ServletFilterLand extends HttpServlet {
 		if (price != null && !price.isEmpty()) {
 			priceAmount = Double.parseDouble(price);
 			land.setPrice(BigDecimal.valueOf(priceAmount));
-		}
-		else
-		{
+		} else {
 			land.setPrice(BigDecimal.valueOf(0));
 		}
 		String transactionType = request.getParameter("transactiontype");
 		if (bhk > 0) {
 			land.setBhk(bhk);
-		}
-		else
-		{
+		} else {
 			land.setBhk(0);
 		}
 		if (transactionType != null && !transactionType.isEmpty()) {
 			land.setTransactionType(transactionType);
-		}
-		else
-		{
+		} else {
 			land.setTransactionType("");
 		}
 		Filter filter = new FilterImpl();
 		if (land.getProperty() != null && land.getPurchaseType() != null
 				&& !land.getPurchaseType().isEmpty()
 				&& land.getLocation().getCity() != null) {
+			HttpSession httpSession = request.getSession(false);
+			long userId = Long.parseLong(httpSession.getAttribute("userId")
+					.toString());
+			Users user = new Users();
+			user.setId(userId);
+			land.setUser(user);
+//			System.out.println(land);
 			List<Land> landDetails = filter.filterLandsDetails(land);
 			if (landDetails != null && !landDetails.isEmpty()) {
 				request.setAttribute("LANDDETAILS", landDetails);
 			}
 		}
-		HttpSession httpSession = request.getSession();
+		// HttpSession httpSession = request.getSession();
 		List<Property> propertyList = serviceLand.getAllProperty();
 		List<City> cityList = serviceLand.getAllCity();
-		request.setAttribute("email", httpSession.getAttribute("email"));
+		// request.setAttribute("email", httpSession.getAttribute("email"));
 		request.setAttribute("proprtype", propertyId);
 		request.setAttribute("cityid", cityId);
 		request.setAttribute("bhk", bhk);

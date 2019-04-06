@@ -16,8 +16,10 @@ import com.chainsys.realestate.model.City;
 import com.chainsys.realestate.model.Property;
 import com.chainsys.realestate.model.Users;
 import com.chainsys.realestate.service.Login;
+import com.chainsys.realestate.service.Profile;
 import com.chainsys.realestate.service.ServiceLand;
 import com.chainsys.realestate.service.impl.LoginImpl;
+import com.chainsys.realestate.service.impl.ProfileImpl;
 import com.chainsys.realestate.service.impl.ServiceLandImpl;
 
 @WebServlet("/ServletLogin")
@@ -34,8 +36,8 @@ public class ServletLogin extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
+		String email = request.getParameter("email").trim();
+		String password = request.getParameter("password").trim();
 		Users users = new Users();
 		users.setEmail(email);
 		users.setPassword(password);
@@ -47,13 +49,20 @@ public class ServletLogin extends HttpServlet {
 				ServiceLand land = new ServiceLandImpl();
 				HttpSession httpSession = request.getSession();
 				httpSession.setAttribute("email", users.getEmail());
+				Profile profile=new ProfileImpl();
+				Users userProfile=profile.getUserDetailsByEmail(users);
+				httpSession.setAttribute("userId",userProfile.getId());
+				httpSession.setAttribute("userName",userProfile.getName());
 				List<Property> propertyList = land.getAllProperty();
 				List<City> cityList = land.getAllCity();
-				request.setAttribute("email", users.getEmail());
+//				request.setAttribute("email", users.getEmail());
+//				request.setAttribute("userName", userProfile.getName());
 				request.setAttribute("PROPERTYINFO", propertyList);
 				request.setAttribute("CITY", cityList);
 				request.setAttribute("ISBUYLAND", true);
 				RequestDispatcher requestDispatcher = request
+						.getRequestDispatcher("buyland.jsp");
+				requestDispatcher = request
 						.getRequestDispatcher("home.jsp");
 				requestDispatcher.forward(request, response);
 			} else {

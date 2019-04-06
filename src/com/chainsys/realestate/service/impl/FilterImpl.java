@@ -6,15 +6,17 @@ import java.util.List;
 import com.chainsys.realestate.dao.FilterDAO;
 import com.chainsys.realestate.dao.impl.FilterDAOImpl;
 import com.chainsys.realestate.model.Land;
+import com.chainsys.realestate.model.Users;
 import com.chainsys.realestate.service.Filter;
 
 public class FilterImpl implements Filter {
 	FilterDAO filterDAO = new FilterDAOImpl();
+
 	@Override
 	public List<Land> filterLandsDetails(Land land) {
 
 		List<Land> landDetails = null;
-		
+
 		if (validateFilterDetails()) {
 			if (land.getProperty().getId() > 0
 					&& land.getLocation().getCity().getId() > 0
@@ -42,7 +44,7 @@ public class FilterImpl implements Filter {
 				} else if (land.getBhk() > 0
 						&& !"".equals(land.getTransactionType())
 						&& !land.getTransactionType().isEmpty()) {
-					
+
 					landDetails = filterDAO.filerLandByBhkTrnType(land);
 				} else if (land.getBhk() > 0) {
 
@@ -72,6 +74,13 @@ public class FilterImpl implements Filter {
 	public boolean validateFilterDetails() {
 
 		return true;
+	}
+
+	@Override
+	public List<Land> filterOwnLandsDetails(Users userDetails) {
+		FilterDAO filterDAO = new FilterDAOImpl();
+		List<Land> landDetailsList = filterDAO.filerOwnLandByUserId(userDetails);
+		return landDetailsList;
 	}
 
 }

@@ -11,7 +11,7 @@ public class Validate {
 	}
 	public static boolean passwordValidate(String password) {
 		boolean isValid=false;
-		String passwordRegex = "^([a-zA-Z0-9$@]+)$";
+		String passwordRegex = "^([a-zA-Z0-9$&]+)$";
 		if (password.matches(passwordRegex)) {
 			isValid=true;
 		}

@@ -21,7 +21,6 @@ public class ProfileImpl implements Profile {
 	@Override
 	public boolean userRegistration(Users user) {
 		boolean registerResult = false;
-		
 		registerResult = userDAO.addUserDetails(user);
 		return registerResult;
 	}
@@ -84,7 +83,8 @@ public class ProfileImpl implements Profile {
 	@Override
 	public boolean editProfile(Users user) {
 		boolean success = false;
-		Users updatedUserDetails = userDAO.getUserDetailsByEmail(user);
+		System.out.println(user);
+		Users updatedUserDetails = userDAO.getUserDetailsById(user);
 		if (user.getName() != null && !user.getName().isEmpty()) {
 			updatedUserDetails.setName(user.getName());
 		}
@@ -108,6 +108,15 @@ public class ProfileImpl implements Profile {
 		Users userDetails = null;
 		if (Validate.emailValidate(user.getEmail())) {
 			userDetails = userDAO.getUserDetailsByEmail(user);
+		}
+		return userDetails;
+	}
+
+	@Override
+	public Users getUserDetailsById(Users user) {
+		Users userDetails = null;
+		if (user.getId()>0) {
+			userDetails = userDAO.getUserDetailsById(user);
 		}
 		return userDetails;
 	}

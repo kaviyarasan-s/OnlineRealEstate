@@ -16,4 +16,6 @@ public interface Profile {
 	
 	Users getUserDetailsByEmail(Users user);
 	
+	Users getUserDetailsById(Users user);
+	
 }

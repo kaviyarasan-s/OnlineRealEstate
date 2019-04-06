@@ -28,20 +28,19 @@ public class ServletEditProfile extends HttpServlet {
 		String button = request.getParameter("button");
 		Profile profile = new ProfileImpl();
 		HttpSession httpSession = request.getSession();
-		String email = httpSession.getAttribute("email").toString();
+//		String email = httpSession.getAttribute("email").toString();
+		Long userId= Long.parseLong(httpSession.getAttribute("userId").toString());
 		Users user = new Users();
-		user.setEmail(email);
-		Users userDetails = profile.getUserDetailsByEmail(user);
-		// if (button.equals("cancel")) {
-		// request.setAttribute(button, false);
-		// } else {
+//		user.setEmail(email);
+		user.setId(userId);
+//		Users userDetails = profile.getUserDetailsByEmail(user);
+		Users userDetails = profile.getUserDetailsById(user);
 		request.setAttribute(button, true);
-		// }
 		request.setAttribute("USERDETAILS", userDetails);
 		RequestDispatcher requestDispatcher = request
 				.getRequestDispatcher("profile.jsp");
 		request.setAttribute("ISPROFILE", true);
-		request.setAttribute("email", email);
+//		request.setAttribute("email", email);
 		requestDispatcher = request.getRequestDispatcher("home.jsp");
 		requestDispatcher.forward(request, response);
 	}
@@ -68,10 +67,13 @@ public class ServletEditProfile extends HttpServlet {
 		}
 		Profile profile = new ProfileImpl();
 		HttpSession httpSession = request.getSession();
-		String email = httpSession.getAttribute("email").toString();
-		user.setEmail(email);
+//		String email = httpSession.getAttribute("email").toString();
+		Long userId= Long.parseLong(httpSession.getAttribute("userId").toString());
+//		user.setEmail(email);
+		user.setId(userId);
 		boolean success = profile.editProfile(user);
-		Users userDetails = profile.getUserDetailsByEmail(user);
+//		Users userDetails = profile.getUserDetailsByEmail(user);
+		Users userDetails = profile.getUserDetailsById(user);
 		request.setAttribute("USERDETAILS", userDetails);
 		if (success) {
 			request.setAttribute("MESSAGE", Constant.updateSuccessMessage);
@@ -82,7 +84,7 @@ public class ServletEditProfile extends HttpServlet {
 		}
 		RequestDispatcher requestDispatcher = request
 				.getRequestDispatcher("profile.jsp");
-		request.setAttribute("email", email);
+//		request.setAttribute("email", email);
 		request.setAttribute("ISPROFILE", true);
 		requestDispatcher = request.getRequestDispatcher("home.jsp");
 		requestDispatcher.forward(request, response);

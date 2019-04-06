@@ -72,38 +72,38 @@ public class ServletPostLand extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String propertyType = request.getParameter("propertytype");
 		int propertyId = 0;
-		if (propertyType != null && !propertyType.isEmpty()) {
+		if (!propertyType.equals("0")) {
 			propertyId = Integer.parseInt(propertyType);
 		}
 		String cityName = request.getParameter("city");
 		int cityId = 0;
-		if (cityName != null && !cityName.isEmpty()) {
+		if (!cityName.equals("0")) {
 			cityId = Integer.parseInt(cityName);
 		}
 		String locationName = request.getParameter("locality");
 		int locationId = 0;
-		if (locationName  != null && !locationName .isEmpty()) {
+		if (!locationName.equals("0")) {
 			locationId = Integer.parseInt(locationName );
 		}
-		String landPrice = request.getParameter("price");
+		String landPrice = request.getParameter("price").trim();
 		double price = 0;
 		if (landPrice != null && !landPrice.isEmpty()) {
 			price = Double.parseDouble(landPrice);
 		}
 		String landBHK = request.getParameter("bhk");
 		int bhk = 0;
-		if (landBHK != null && !landBHK.isEmpty()) {
+		if (!landBHK.equals("0")) {
 			bhk = Integer.parseInt(landBHK);
 		}
 		String buildingName = request.getParameter("buildingname");
-		String landSize = request.getParameter("landsize");
+		String landSize = request.getParameter("landsize").trim();
 		int size = 0;
 		if (landSize != null && !landSize.isEmpty()) {
 			size = Integer.parseInt(landSize);
 		}
 		String transactionType = request.getParameter("transactiontype");
 		String purchaseType = request.getParameter("purchasetype");
-		String landDiscount = request.getParameter("discount");
+		String landDiscount = request.getParameter("discount").trim();
 		int discount = 0;
 		if (landDiscount != null && !landDiscount.isEmpty()) {
 			discount = Integer.parseInt(landDiscount);
@@ -115,8 +115,10 @@ public class ServletPostLand extends HttpServlet {
 		HttpSession httpSession = request.getSession();
 		Users users = new Users();
 		users.setEmail(httpSession.getAttribute("email").toString());
+		users.setId(Long.parseLong(httpSession.getAttribute("userId").toString()));
 		Profile profile = new ProfileImpl();
-		Users userDetails = profile.getUserDetailsByEmail(users);
+//		Users userDetails = profile.getUserDetailsByEmail(users);
+		Users userDetails = profile.getUserDetailsById(users);
 		land.setUser(userDetails);
 		Property property = new Property();
 		property.setId(propertyId);
@@ -134,10 +136,16 @@ public class ServletPostLand extends HttpServlet {
 		land.setBhk(bhk);
 		land.setBuildingName(buildingName);
 		land.setSize(size);
-		land.setTransactionType(transactionType);
-		land.setPurchaseType(purchaseType);
+		if (!transactionType.equals("0")) {
+			land.setTransactionType(transactionType);
+		}
+		if (!purchaseType.equals("0")) {
+			land.setPurchaseType(purchaseType);
+		}
 		land.setDiscount(discount);
-		land.setStatus(status);
+		if (!status.equals("0")) {
+			land.setStatus(status);
+		}
 		land.setDescription(description);
 		land.setCreatedDate(LocalDateTime.now());
 		land.setCreatedBy(userDetails.getId());
@@ -154,7 +162,7 @@ public class ServletPostLand extends HttpServlet {
 		RequestDispatcher requestDispatcher = request
 				.getRequestDispatcher("LandDetail.jsp");
 		request.setAttribute("ISPOSTLAND", true);
-		request.setAttribute("email", httpSession.getAttribute("email").toString());
+//		request.setAttribute("email", httpSession.getAttribute("email").toString());
 		requestDispatcher = request
 				.getRequestDispatcher("home.jsp");
 		requestDispatcher.forward(request, response);

@@ -34,7 +34,7 @@ public class ChangePassword extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String buttonAction = request.getParameter("button");
 		if ("reset".equals(buttonAction)) {
-			String email = request.getParameter("email");
+			String email = request.getParameter("email").trim();
 			Users user = new Users();
 			user.setEmail(email);
 			HttpSession httpSession = request.getSession();

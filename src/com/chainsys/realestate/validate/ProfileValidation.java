@@ -16,7 +16,7 @@ public class ProfileValidation {
 					&& Validate.emailValidate(email)) {
 				if (mobileNumber.length() == 10
 						&& Validate.numberValidation(mobileNumber)) {
-					if (password != null&&password.isEmpty()
+					if (password != null && !password.isEmpty()
 							&& Validate.passwordValidate(password)) {
 						isValid = true;
 					}

@@ -30,10 +30,10 @@ public class ServletRegister extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("name");
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		String number = request.getParameter("phonenumber");
+		String name = request.getParameter("name").trim();
+		String email = request.getParameter("email").trim();
+		String password = request.getParameter("password").trim();
+		String number = request.getParameter("phonenumber").trim();
 		long mobilenumber = 0;
 		if (number != null && !number.isEmpty()
 				&& Validate.numberValidation(number)) {

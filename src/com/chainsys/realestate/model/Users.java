@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.sun.istack.NotNull;
 
@@ -25,7 +26,7 @@ public class Users {
 	@NotNull
 	private String name;
 
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	@NotNull
 	private String email;
 

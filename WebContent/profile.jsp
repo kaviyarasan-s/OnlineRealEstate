@@ -11,8 +11,6 @@
 	display: flex;
 	align-items: stretch;
 }
-
-
 </style>
 </head>
 <body>
@@ -31,7 +29,7 @@
 				<div class="row">
 					<b>Name:</b><input type="text" name="name"
 						value="${USERDETAILS.name}" class="form-control input-md"
-						style="width: 60%; margin-left: 5%;outline: 1px solid #8080806e;">
+						style="width: 60%; margin-left: 5%; outline: 1px solid #8080806e;">
 				</div>
 				<div class="row">
 					<button type="submit" name="button" value="editname"
@@ -58,9 +56,41 @@
 			</div>
 		</c:if>
 	</div>
-	<div class="box" style="margin-top: 2%; margin-left: 6.3%">
+	<div class="box row" style="margin-top: 2%; margin-left: 4.9%">
+		<c:if test="${editemail}">
 
-		<b>Email :</b> ${USERDETAILS.email}
+			<form method="post" action="ServletEditProfile">
+
+				<div class="row">
+					<b>Email:</b><input type="text" name="email"
+						value="${USERDETAILS.email}" class="form-control input-md"
+						style="width: 60%; margin-left: 5%; outline: 1px solid #8080806e;">
+				</div>
+				<div class="row">
+					<button type="submit" name="button" value="editemail"
+						class="btn btn-primary" style="margin-top: 4%">Change</button>
+				</div>
+
+			</form>
+			<form method="post" action="ServletEditProfile">
+				<div class="row">
+					<button type="submit" name="button" value="editemail"
+						class="btn btn-primary">Cancel</button>
+				</div>
+			</form>
+		</c:if>
+		<c:if test="${!editemail}">
+			<div class="col-md-8">
+				<b>Email : </b>${USERDETAILS.email}
+			</div>
+			<div class="col-md-4">
+				<form method="get" action="ServletEditProfile">
+					<button type="submit" name="button" value="editemail"
+						class="btn btn-primary">Edit</button>
+				</form>
+			</div>
+		</c:if>
+		<%-- <b>Email :</b> ${USERDETAILS.email} --%>
 
 	</div>
 	<div class="box row" style="margin-top: 4%; margin-left: 5%">
@@ -69,7 +99,8 @@
 			<form method="post" action="ServletEditProfile">
 				<div class="row">
 					<b>Phone number:</b><input type="text" name="phonenumber"
-						value="${USERDETAILS.mobilenumber}" class="form-control input-md" style="outline: 1px solid #8080806e;width:50%">
+						value="${USERDETAILS.mobilenumber}" class="form-control input-md"
+						style="outline: 1px solid #8080806e; width: 50%">
 				</div>
 				<div class="row">
 					<button type="submit" name="button" value="editphonenumber"
@@ -110,7 +141,7 @@
 					</div>
 					<div class="row">
 						<button type="submit" name="button" value="editpassword"
-							class="btn btn-primary" style="margin-top:5%;margin-left:10%">Change</button>
+							class="btn btn-primary" style="margin-top: 5%; margin-left: 10%">Change</button>
 					</div>
 				</form>
 				<form method="post" action="ServletEditProfile">
@@ -140,7 +171,7 @@
 	<!-- <div>
 					<a href="ServletHome"><b>Back</b></a>
 				</div> -->
-	<div style="margin-left:6%">
+	<div style="margin-left: 6%">
 		<%
 			if (request.getAttribute("MESSAGE") != null) {
 				out.print(request.getAttribute("MESSAGE"));
