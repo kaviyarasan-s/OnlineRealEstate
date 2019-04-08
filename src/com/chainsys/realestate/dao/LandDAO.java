@@ -18,4 +18,5 @@ public interface LandDAO {
 	Property getPropertyById(Property property);
 	List<City> getAllCityDetails();
 	List<Property> getAllPropertyDetails();
+	Land getLandDetailsByLandId(Land land);
 }

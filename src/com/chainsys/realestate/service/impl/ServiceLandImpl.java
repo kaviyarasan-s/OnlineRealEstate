@@ -93,4 +93,10 @@ public class ServiceLandImpl implements ServiceLand {
 		return propertyList;
 	}
 
+	@Override
+	public Land getLandDetailsByLandId(Land land) {
+		Land landDetails=landDAO.getLandDetailsByLandId(land);
+		return landDetails;
+	}
+
 }

@@ -206,4 +206,28 @@ public class LandDAOImpl implements LandDAO {
 		return locationDetails;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public Land getLandDetailsByLandId(Land land) {
+		Land landDetails = null;
+		// getting session object from session factory
+		session = sessionFactory.openSession();
+		// getting transaction object from session object
+		session.beginTransaction();
+		try {
+			Query<Land> query = session
+					.createQuery("from Land where id=:landId");
+			query.setParameter("landId", land.getId());
+			List<Land> landList = query.list();
+			if (!landList.isEmpty() && landList != null) {
+				landDetails = landList.get(0);
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return landDetails;
+	}
+
 }

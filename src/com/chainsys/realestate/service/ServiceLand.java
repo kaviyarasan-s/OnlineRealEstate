@@ -19,5 +19,6 @@ public interface ServiceLand {
 	List<City> getAllCity();
 	List<Property> getAllProperty();
 	List<Location> getAllLocationDetailsByCityId(City city);
+	Land getLandDetailsByLandId(Land land);
 	
 }

@@ -122,6 +122,9 @@ div.footer {
 				<c:if test="${ISPOSTLAND}">
 					<%@ include file="LandDetail.jsp"%>
 				</c:if>
+				<c:if test="${ISEDITLAND}">
+					<%@ include file="editlandinfo.jsp"%>
+				</c:if>
 				<c:if test="${OWNLAND}">
 					<%@ include file="ownland.jsp"%>
 				</c:if>

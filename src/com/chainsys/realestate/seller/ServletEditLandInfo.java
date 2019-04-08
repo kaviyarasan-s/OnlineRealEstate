@@ -3,7 +3,9 @@ package com.chainsys.realestate.seller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +25,28 @@ public class ServletEditLandInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		int landId=Integer.parseInt(request.getParameter("editland"));
+		Land land=new Land();
+		land.setId(landId);
+		ServiceLand serviceLand=new ServiceLandImpl();
+		Land landInformations=serviceLand.getLandDetailsByLandId(land);
+		List<City> cityDetails = serviceLand.getAllCity();
+		List<Property> propertyTypes = serviceLand.getAllProperty();
+		request.setAttribute("PROPERTYINFO", propertyTypes);
+		request.setAttribute("CITY", cityDetails);
+		request.setAttribute("propertytype", landInformations.getProperty().getId());
+		request.setAttribute("price", landInformations.getPrice());
+		request.setAttribute("cityname", landInformations.getLocation().getCity().getId());
+		request.setAttribute("buildingname", landInformations.getBuildingName());
+		request.setAttribute("landsize", landInformations.getSize());
+		request.setAttribute("discount", landInformations.getDiscount());
+		request.setAttribute("description", landInformations.getDescription());
+		RequestDispatcher requestDispatcher = request
+				.getRequestDispatcher("editlandinfo.jsp");
+		request.setAttribute("ISEDITLAND", true);
+		requestDispatcher = request
+				.getRequestDispatcher("home.jsp");
+		requestDispatcher.forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

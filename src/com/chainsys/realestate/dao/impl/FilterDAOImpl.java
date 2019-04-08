@@ -457,7 +457,7 @@ public class FilterDAOImpl implements FilterDAO {
 		try {
 			String query = "select "
 					+ "u.name,u.phonenumber,u.email, "
-					+ "p.name as propertyname, "
+					+ "p.name as propertyname,lu.land_id as landid, "
 					+ "lu.price,lu.bhk,lu.building_name,lu.land_size,lu.transaction_type,lu.purchasetype,lu.discount,lu.description,lu.status, "
 					+ "c.name as cityname ,l.name as locationname  from RL_EST_LAND lu "
 					+ "join RL_EST_PROPERTYTYPE p on lu.property_id=p.property_id "
@@ -484,6 +484,7 @@ public class FilterDAOImpl implements FilterDAO {
 				city.setName(resultSet.getString("cityname"));
 				location.setCity(city);
 				location.setName(resultSet.getString("locationname"));
+				addLandDetails.setId(resultSet.getInt("landid"));
 				addLandDetails.setLocation(location);
 				addLandDetails.setBhk(resultSet.getInt("bhk"));
 				addLandDetails.setPrice(BigDecimal.valueOf(resultSet
