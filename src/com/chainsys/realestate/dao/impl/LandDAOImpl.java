@@ -35,7 +35,7 @@ public class LandDAOImpl implements LandDAO {
 			if (result > 0) {
 				success = true;
 			}
-			session.getTransaction().commit();
+			commitTransaction();
 		} catch (Exception e) {
 			success = false;
 			e.printStackTrace();
@@ -48,8 +48,18 @@ public class LandDAOImpl implements LandDAO {
 	@Override
 	public boolean editLand(Land land) {
 		boolean success = true;
+		// getting session object from session factory
+		session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.saveOrUpdate(land);
+		try {
+			session.saveOrUpdate(land);
+			commitTransaction();
+		} catch (Exception e) {
+			success=false;
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
 		return success;
 	}
 
@@ -228,6 +238,14 @@ public class LandDAOImpl implements LandDAO {
 			session.close();
 		}
 		return landDetails;
+	}
+	
+	public void commitTransaction() {
+		try {
+			session.getTransaction().commit();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

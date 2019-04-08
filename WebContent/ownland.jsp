@@ -22,6 +22,11 @@ div.landinfo {
 				<div style="margin-right: 10%; color: red">
 					<b>Land details:</b>
 				</div>
+				<div>
+					<c:if test="${MESSAGE!=null }">
+						<span>${MESSAGE}</span>
+					</c:if>
+				</div>
 				<c:forEach var="landdetails" items="${LANDDETAILS}">
 
 					<div class="column">
@@ -66,7 +71,8 @@ div.landinfo {
 						</div>
 						<div>
 							<form method="get" action="ServletEditLandInfo">
-								<button type="submit" name="editland" value="${landdetails.id }" class="btn btn-primary">Edit</button>
+								<button type="submit" name="editland" value="${landdetails.id }"
+									class="btn btn-primary">Edit</button>
 							</form>
 						</div>
 					</div>

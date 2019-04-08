@@ -14,6 +14,8 @@ public interface Constant {
 	String logoutMessage = "<div style='color:green'>*logout successfully</div>";
 	String postLandSuccessMessage="<div style='color:green'>*Land added successfully</div>";
 	String postLandFailureMessage="<div style='color:red'>*Land added Failed</div>";
+	String updateLandInfoSuccessMessage="<div style='color:green'>*Land updated successfully</div>";
+	String updateLandInfoFailureMessage="<div style='color:red'>*Land updation Failed</div>";
 	
 
 }
